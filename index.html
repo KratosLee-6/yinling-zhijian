@@ -1,0 +1,306 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>银龄指尖 - 让爸妈跟上时代</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--p:#FF6B6B;--s:#4ECDC4;--bg:#FFF9F0;--t:#333;--w:#fff;--g:#888}
+body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--t);max-width:430px;margin:0 auto;min-height:100vh}
+.page{display:none;padding:16px;padding-bottom:80px;min-height:100vh}
+.page.active{display:block}
+.header{text-align:center;padding:20px 0}
+.header h1{font-size:26px;color:var(--p);margin-bottom:6px}
+.header p{font-size:14px;color:var(--g)}
+.sbox{background:var(--w);border-radius:12px;padding:12px 16px;margin:12px 0;display:flex;align-items:center}
+.sbox input{flex:1;border:none;font-size:15px;margin-left:10px;outline:none}
+.sec{font-size:15px;font-weight:bold;margin:14px 0 10px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.card{background:var(--w);border-radius:14px;padding:14px;text-align:center;box-shadow:0 2px 6px rgba(0,0,0,0.06);cursor:pointer}
+.card:active{transform:scale(0.97)}
+.card.hl{border:2px solid var(--p)}
+.ic{width:52px;height:52px;margin:0 auto 6px;border-radius:12px;object-fit:cover}
+.nm{font-size:15px;font-weight:bold}
+.ds{font-size:11px;color:var(--g);margin-top:3px}
+.bbar{display:flex;align-items:center;padding:10px 0;border-bottom:1px solid #eee;margin-bottom:14px}
+.bbtn{font-size:22px;padding:6px 10px;cursor:pointer}
+.ptitle{flex:1;text-align:center;font-size:17px;font-weight:bold;margin-right:40px}
+.bintro{background:var(--w);border-radius:14px;padding:14px;text-align:center;box-shadow:0 2px 6px rgba(0,0,0,0.06);margin-bottom:14px}
+.bintro .ic{width:58px;height:58px;margin-bottom:8px}
+.bintro h3{font-size:18px;margin-bottom:5px}
+.bintro p{font-size:13px;color:var(--g)}
+.bgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.bcard{background:var(--w);border-radius:12px;padding:12px 8px;text-align:center;box-shadow:0 2px 6px rgba(0,0,0,0.06);cursor:pointer}
+.bcard:active{transform:scale(0.95)}
+.bcard .ic{width:44px;height:44px;margin-bottom:6px;border-radius:10px}
+.bcard .nm{font-size:13px}
+.theader{background:var(--w);border-radius:14px;padding:18px;text-align:center;box-shadow:0 2px 6px rgba(0,0,0,0.06);margin-bottom:14px}
+.theader .ic{width:66px;height:66px;margin-bottom:10px;border-radius:14px}
+.theader h2{font-size:20px;margin-bottom:5px}
+.theader p{font-size:13px;color:var(--g)}
+.tlist{font-size:15px;font-weight:bold;margin:18px 0 10px}
+.titem{background:var(--w);border-radius:10px;padding:12px 14px;margin-bottom:9px;display:flex;align-items:center;box-shadow:0 2px 6px rgba(0,0,0,0.06);cursor:pointer}
+.titem:active{background:#f5f5f5}
+.titem .num{width:30px;height:30px;background:var(--p);color:var(--w);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:bold;flex-shrink:0}
+.titem .info{margin-left:10px;flex:1}
+.titem .ti{font-size:15px;font-weight:bold}
+.titem .sub{font-size:11px;color:var(--g);margin-top:2px}
+.titem .ar{color:#ccc;font-size:16px}
+.sc{background:var(--w);border-radius:14px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.08);margin-bottom:14px}
+.sc img{width:100%;display:block}
+.sc .desc{padding:12px;font-size:15px;text-align:center}
+.sc .badge{display:inline-block;background:var(--p);color:var(--w);width:26px;height:26px;border-radius:50%;line-height:26px;text-align:center;font-weight:bold;margin-right:6px}
+.cbox{background:linear-gradient(135deg,var(--s),#3DB9B1);color:var(--w);border-radius:10px;padding:16px;text-align:center;font-size:16px;font-weight:bold;margin:14px 0}
+.btnfav{width:100%;background:var(--w);border:2px solid var(--p);color:var(--p);border-radius:10px;padding:13px;font-size:15px;font-weight:bold;cursor:pointer;margin-top:6px}
+.btnfav.active{background:var(--p);color:var(--w)}
+.tabbar{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;background:var(--w);display:flex;justify-content:space-around;padding:8px 0;box-shadow:0 -2px 8px rgba(0,0,0,0.06)}
+.tabitem{display:flex;flex-direction:column;align-items:center;cursor:pointer;padding:5px 18px}
+.tabitem .ic{font-size:20px;color:var(--g)}
+.tabitem.active .ic{color:var(--p)}
+.tabitem .lb{font-size:10px;margin-top:2px;color:var(--g)}
+.tabitem.active .lb{color:var(--p);font-weight:bold}
+.empty{text-align:center;padding:50px 20px;color:var(--g)}
+.empty .ic{font-size:44px;margin-bottom:10px}
+.sg{background:var(--w);border-radius:10px;overflow:hidden;margin-top:14px}
+.sitem{padding:12px 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #f0f0f0}
+.sitem:last-child{border-bottom:none}
+.fbtn{padding:5px 10px;border:1px solid #ddd;border-radius:5px;background:var(--w);cursor:pointer;font-size:12px}
+.fbtn.active{background:var(--p);color:var(--w);border-color:var(--p)}
+.at{font-size:13px;color:var(--g);line-height:1.7;padding:14px}
+.toast{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,0.7);color:#fff;padding:10px 20px;border-radius:6px;font-size:14px;z-index:1000;display:none}
+.toast.show{display:block;animation:fa 1.5s}
+@keyframes fa{0%{opacity:0}20%{opacity:1}80%{opacity:1}100%{opacity:0}}
+</style>
+</head>
+<body>
+
+<!-- 一级：首页 -->
+<div id="page-home" class="page active">
+  <div class="header"><h1>❤️ 银龄指尖</h1><p>让爸妈跟上时代</p></div>
+  <div class="sbox"><span style="color:#999">🔍</span><input type="text" placeholder="搜索软件..." readonly></div>
+  <div class="sec">📱 常用软件</div>
+  <div class="grid" id="app-grid"></div>
+</div>
+
+<!-- 二级A：软件详情页 -->
+<div id="page-app-detail" class="page">
+  <div class="bbar"><span class="bbtn" onclick="showPage('home')">←</span><h2 class="ptitle" id="app-detail-title">微信</h2></div>
+  <div id="app-detail-content"></div>
+</div>
+
+<!-- 二级B：手机品牌选择页 -->
+<div id="page-brand-select" class="page">
+  <div class="bbar"><span class="bbtn" onclick="showPage('home')">←</span><h2 class="ptitle">选择手机品牌</h2></div>
+  <div class="bintro">
+    <img class="ic" src="assets/icons/苹果手机图标.png" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%234A90D9%22 width=%22100%22 height=%22100%22 rx=%2220%22/><text x=%2250%22 y=%2255%22 text-anchor=%22middle%22 font-size=%2230%22 fill=%22white%22>设</text></svg>'">
+    <h3>📱 手机基础设置</h3>
+    <p>不同品牌的手机设置方法不同<br>请先选择您的手机品牌</p>
+  </div>
+  <div class="bgrid" id="brand-grid"></div>
+</div>
+
+<!-- 三级A：品牌教程列表页 -->
+<div id="page-brand-tutorial" class="page">
+  <div class="bbar"><span class="bbtn" onclick="showPage('brand-select')">←</span><h2 class="ptitle" id="brand-title">华为</h2></div>
+  <div id="brand-tutorial-content"></div>
+</div>
+
+<!-- 三级B：教程步骤详情页 -->
+<div id="page-tutorial-step" class="page">
+  <div class="bbar"><span class="bbtn" onclick="goBackFromStep()">←</span><h2 class="ptitle" id="step-title">教程</h2></div>
+  <div id="step-content"></div>
+  <div class="cbox">✅ 学会了！</div>
+  <button class="btnfav" id="fav-btn" onclick="toggleFav()">⭐ 收藏此教程</button>
+</div>
+
+<!-- 收藏页 -->
+<div id="page-favorites" class="page">
+  <div class="header"><h1>❤️ 我的收藏</h1><p>已收藏的教程</p></div>
+  <div id="fav-list"></div>
+</div>
+
+<!-- 设置页 -->
+<div id="page-settings" class="page">
+  <div class="header"><h1>⚙️ 设置</h1></div>
+  <div class="sg">
+    <div class="sitem"><span>🔤 字体大小</span>
+      <div><button class="fbtn" onclick="setFont('small')">小</button><button class="fbtn active" onclick="setFont('medium')" id="font-med">中</button><button class="fbtn" onclick="setFont('large')">大</button></div>
+    </div>
+  </div>
+  <div class="sg">
+    <div class="at"><p><strong>银龄指尖 V1.0</strong></p><p style="margin-top:8px">专为中老年用户打造的手机教程平台</p><p style="margin-top:5px">用最简单的步骤图解</p><p style="margin-top:5px">让每个人都能学会使用智能手机</p></div>
+  </div>
+</div>
+
+<!-- 底部导航 -->
+<div class="tabbar">
+  <div class="tabitem active" onclick="showPage('home')"><span class="ic">🏠</span><span class="lb">首页</span></div>
+  <div class="tabitem" onclick="showPage('favorites')"><span class="ic">❤️</span><span class="lb">收藏</span></div>
+  <div class="tabitem" onclick="showPage('settings')"><span class="ic">⚙️</span><span class="lb">设置</span></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// 数据
+const apps=[
+{id:'wechat',name:'微信',desc:'聊天、视频通话',icon:'assets/icons/微信图标.png',type:'app'},
+{id:'taobao',name:'淘宝',desc:'网上购物',icon:'assets/icons/淘宝图标.png',type:'app'},
+{id:'douyin',name:'抖音',desc:'刷视频',icon:'assets/icons/抖音图标.png',type:'app'},
+{id:'amap',name:'高德地图',desc:'导航、打车',icon:'assets/icons/高德图标.png',type:'app'},
+{id:'12306',name:'铁路12306',desc:'买火车票',icon:'assets/icons/12306图标.png',type:'app'},
+{id:'phone',name:'手机设置',desc:'WiFi、内存清理',icon:'assets/icons/苹果手机图标.png',type:'brand'},
+{id:'alipay',name:'支付宝',desc:'付款、收款',icon:'assets/icons/支付宝图标.png',type:'app'},
+{id:'meituan',name:'美团',desc:'外卖、买菜',icon:'assets/icons/美团图标.png',type:'app'},
+{id:'social',name:'人社局',desc:'查社保、挂号',icon:'assets/icons/人社局图标.png',type:'app'},
+{id:'traffic',name:'交管12123',desc:'查违章、预约',icon:'assets/icons/12123图标.png',type:'app'}
+];
+const brands=[
+{id:'huawei',name:'华为',icon:'assets/icons/华为手机图标.png'},
+{id:'xiaomi',name:'小米',icon:'assets/icons/小米手机图标.png'},
+{id:'oppo',name:'OPPO',icon:'assets/icons/OPPO手机图标.png'},
+{id:'vivo',name:'vivo',icon:'assets/icons/vivo手机图标.png'},
+{id:'apple',name:'苹果',icon:'assets/icons/苹果手机图标.png'},
+{id:'samsung',name:'三星',icon:'assets/icons/三星手机图标.png'}
+];
+const brandTuts={
+huawei:[{id:'hw-wifi',name:'连接WiFi',sub:'3步学会连接无线网',icon:'📶'},{id:'hw-storage',name:'清理内存',sub:'释放手机空间',icon:'🧹'},{id:'hw-bluetooth',name:'连接蓝牙',sub:'配对耳机/音箱',icon:'🔗'},{id:'hw-update',name:'系统更新',sub:'升级到新版本',icon:'🔄'}],
+xiaomi:[{id:'xm-wifi',name:'连接WiFi',sub:'3步学会连接无线网',icon:'📶'},{id:'xm-storage',name:'清理内存',sub:'一键清理加速',icon:'🧹'},{id:'xm-bluetooth',name:'连接蓝牙',sub:'配对耳机/音箱',icon:'🔗'},{id:'xm-update',name:'系统更新',sub:'MIUI版本升级',icon:'🔄'}],
+oppo:[{id:'op-wifi',name:'连接WiFi',sub:'3步学会连接无线网',icon:'📶'},{id:'op-storage',name:'清理内存',sub:'释放手机空间',icon:'🧹'},{id:'op-bluetooth',name:'连接蓝牙',sub:'配对耳机/音箱',icon:'🔗'},{id:'op-update',name:'系统更新',sub:'ColorOS升级',icon:'🔄'}],
+vivo:[{id:'vv-wifi',name:'连接WiFi',sub:'3步学会连接无线网',icon:'📶'},{id:'vv-storage',name:'清理内存',sub:'一键优化加速',icon:'🧹'},{id:'vv-bluetooth',name:'连接蓝牙',sub:'配对耳机/音箱',icon:'🔗'},{id:'vv-update',name:'系统更新',sub:'Funtouch升级',icon:'🔄'}],
+apple:[{id:'ap-wifi',name:'连接WiFi',sub:'设置无线网络',icon:'📶'},{id:'ap-storage',name:'清理存储',sub:'管理手机空间',icon:'🧹'},{id:'ap-bluetooth',name:'连接蓝牙',sub:'配对耳机/手表',icon:'🔗'},{id:'ap-update',name:'系统更新',sub:'iOS版本升级',icon:'🔄'}],
+samsung:[{id:'ss-wifi',name:'连接WiFi',sub:'3步学会连接无线网',icon:'📶'},{id:'ss-storage',name:'清理内存',sub:'释放手机空间',icon:'🧹'},{id:'ss-bluetooth',name:'连接蓝牙',sub:'配对耳机/手表',icon:'🔗'},{id:'ss-update',name:'系统更新',sub:'One UI升级',icon:'🔄'}]
+};
+const appTuts={
+wechat:[{id:'wx-msg',name:'发消息',sub:'和好友文字聊天',icon:'💬'},{id:'wx-video',name:'视频通话',sub:'面对面聊天',icon:'📹'},{id:'wx-pay',name:'付款',sub:'微信支付扫码付钱',icon:'💰'},{id:'wx-moments',name:'发朋友圈',sub:'分享生活动态',icon:'📱'}],
+taobao:[{id:'tb-search',name:'搜索商品',sub:'找到想要的东西',icon:'🔍'},{id:'tb-cart',name:'加入购物车',sub:'先收藏再买',icon:'🛒'},{id:'tb-buy',name:'下单付款',sub:'完成购买支付',icon:'💳'}],
+douyin:[{id:'dy-watch',name:'刷视频',sub:'看推荐精彩内容',icon:'▶️'},{id:'dy-search',name:'搜索视频',sub:'找想看的内容',icon:'🔍'},{id:'dy-like',name:'点赞收藏',sub:'喜欢就收藏起来',icon:'❤️'}],
+amap:[{id:'am-nav',name:'导航',sub:'规划行车路线',icon:'🧭'},{id:'am-taxi',name:'打车',sub:'叫出租车出行',icon:'🚕'}],
+alipay:[{id:'ali-pay',name:'付款',sub:'扫一扫付钱',icon:'💰'},{id:'ali-receive',name:'收款',sub:'让别人付钱给你',icon:'📥'}],
+meituan:[{id:'mt-food',name:'点外卖',sub:'在家轻松吃饭',icon:'🍜'},{id:'mt-buy',name:'买菜',sub:'次日送达家门口',icon:'🥬'}],
+social:[{id:'so-insurance',name:'查社保',sub:'看保险缴纳记录',icon:'📋'},{id:'so-reg',name:'预约挂号',sub:'医院看病预约',icon:'🏥'}],
+traffic:[{id:'tf-fine',name:'查违章',sub:'看罚单缴纳记录',icon:'🚗'},{id:'tf-book',name:'预约考试',sub:'驾照考试预约',icon:'📝'}],
+'12306':[{id:'tr-search',name:'查询车次',sub:'查看余票情况',icon:'🔍'},{id:'tr-buy',name:'购买火车票',sub:'完成购票支付',icon:'🎫'}]
+};
+const stepData={
+'hw-wifi':[{s:1,d:'打开手机【设置】'},{s:2,d:'点击【WLAN】或【无线网络】'},{s:3,d:'找到并点击您的WiFi名称'},{s:4,d:'输入WiFi密码，点击【连接】'}],
+'xm-wifi':[{s:1,d:'打开手机【设置】'},{s:2,d:'点击【WLAN】'},{s:3,d:'开启WLAN，选择您的WiFi'},{s:4,d:'输入密码，点击【连接】'}],
+'ap-wifi':[{s:1,d:'打开手机【设置】（灰色齿轮图标）'},{s:2,d:'点击【无线局域网】或【Wi-Fi】'},{s:3,d:'开启无线局域网，选择WiFi名称'},{s:4,d:'输入密码，点击【加入】'}],
+'wx-msg':[{s:1,d:'打开微信，点击一个好友'},{s:2,d:'点击屏幕底部的输入框'},{s:3,d:'输入想说的话'},{s:4,d:'点击【发送】按钮'}]
+};
+let curApp=null,curBrand=null,curTut=null,prevPage='home';
+let favorites=JSON.parse(localStorage.getItem('favs')||'[]');
+function init(){renderAppGrid();renderBrandGrid();renderFavs();loadFont()}
+function renderAppGrid(){
+let h='';
+apps.forEach(a=>{
+let ec="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%23ddd%22 width=%22100%22 height=%22100%22 rx=%2220%22/><text x=%2250%22 y=%2255%22 text-anchor=%22middle%22 font-size=%2230%22>"+a.name[0]+"</text></svg>'";
+h+=`<div class="card ${a.type==='brand'?'hl':''}" onclick="openApp('${a.id}')"><img class="ic" src="${a.icon}" onerror="${ec}"><div class="nm">${a.name}</div><div class="ds">${a.desc}</div></div>`;
+});
+document.getElementById('app-grid').innerHTML=h;
+}
+function renderBrandGrid(){
+let h='';
+brands.forEach(b=>{
+let ec="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%234A90D9%22 width=%22100%22 height=%22100%22 rx=%2220%22/><text x=%2250%22 y=%2255%22 text-anchor=%22middle%22 font-size=%2225%22 fill=%22white%22>"+b.name[0]+"</text></svg>'";
+h+=`<div class="bcard" onclick="openBrand('${b.id}')"><img class="ic" src="${b.icon}" onerror="${ec}"><div class="nm">${b.name}</div></div>`;
+});
+document.getElementById('brand-grid').innerHTML=h;
+}
+function showPage(id){
+document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+document.getElementById('page-'+id).classList.add('active');
+document.querySelectorAll('.tabitem').forEach((t,i)=>t.classList.remove('active'));
+if(id==='home'||id==='favorites'||id==='settings'){
+document.querySelectorAll('.tabitem')[['home','favorites','settings'].indexOf(id)].classList.add('active');
+}
+}
+function openApp(id){
+curApp=apps.find(a=>a.id===id);
+if(!curApp)return;
+if(id==='phone'){prevPage='home';showPage('brand-select');return;}
+document.getElementById('app-detail-title').textContent=curApp.name;
+let tuts=appTuts[id]||[];
+let h=`<div class="theader"><img class="ic" src="${curApp.icon}"><h2>${curApp.name}</h2><p>${curApp.desc}</p></div><div class="tlist">📚 教程目录</div>`;
+tuts.forEach((t,i)=>{h+=`<div class="titem" onclick="openTut('${t.id}','${id}','app','${curApp.name}')"><div class="num">${i+1}</div><div class="info"><div class="ti">${t.icon} ${t.name}</div><div class="sub">${t.sub||''}</div></div><span class="ar">›</span></div>`;});
+document.getElementById('app-detail-content').innerHTML=h;
+prevPage='app-detail';
+showPage('app-detail');
+}
+function openBrand(id){
+curBrand=brands.find(b=>b.id===id);
+if(!curBrand)return;
+document.getElementById('brand-title').textContent=curBrand.name+' 设置教程';
+let tuts=brandTuts[id]||[];
+let h=`<div class="theader"><img class="ic" src="${curBrand.icon}"><h2>${curBrand.name} 手机设置</h2><p>选择要学习的功能</p></div><div class="tlist">📚 教程目录</div>`;
+tuts.forEach((t,i)=>{h+=`<div class="titem" onclick="openTut('${t.id}','${id}','brand','${curBrand.name}')"><div class="num">${i+1}</div><div class="info"><div class="ti">${t.icon} ${t.name}</div><div class="sub">${t.sub}</div></div><span class="ar">›</span></div>`;});
+document.getElementById('brand-tutorial-content').innerHTML=h;
+prevPage='brand-tutorial';
+showPage('brand-tutorial');
+}
+function openTut(id,pid,ptype,pname){
+curTut={id,pid,ptype,pname};
+document.getElementById('step-title').textContent=id.split('-').pop();
+let steps=stepData[id]||[{s:1,d:'第一步操作说明'},{s:2,d:'第二步操作说明'},{s:3,d:'第三步操作说明'}];
+let h='';
+steps.forEach(s=>{h+=`<div class="sc"><div style="background:linear-gradient(135deg,#667eea,#764ba2);height:180px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:42px">📱 步骤${s.s}</div><div class="desc"><span class="badge">${s.s}</span>${s.d}</div></div>`;});
+document.getElementById('step-content').innerHTML=h;
+updateFavBtn();
+showPage('tutorial-step');
+}
+function goBackFromStep(){
+if(prevPage==='app-detail')showPage('app-detail');
+else if(prevPage==='brand-tutorial')showPage('brand-tutorial');
+else showPage('home');
+}
+function toggleFav(){
+if(!curTut)return;
+let idx=favorites.findIndex(f=>f.id===curTut.id);
+if(idx>-1){favorites.splice(idx,1);toast('已取消收藏');}
+else{favorites.push({...curTut});toast('已收藏！');}
+localStorage.setItem('favs',JSON.stringify(favorites));
+updateFavBtn();
+renderFavs();
+}
+function updateFavBtn(){
+if(!curTut)return;
+let isFav=favorites.some(f=>f.id===curTut.id);
+let btn=document.getElementById('fav-btn');
+btn.className='btnfav'+(isFav?' active':'');
+btn.textContent=isFav?'❤️ 已收藏':'⭐ 收藏此教程';
+}
+function renderFavs(){
+let h='';
+if(favorites.length===0){
+h='<div class="empty"><div class="ic">📚</div><p>还没有收藏任何教程</p><p style="margin-top:8px;font-size:13px">点击教程页的⭐收藏</p></div>';
+}else{
+favorites.forEach(f=>{h+=`<div class="titem" onclick="openTut('${f.id}','${f.pid}','${f.ptype}','${f.pname}')"><div class="num">📖</div><div class="info"><div class="ti">${f.pname}</div><div class="sub">${f.id.split('-').pop()}</div></div><span class="ar">›</span></div>`;});
+}
+document.getElementById('fav-list').innerHTML=h;
+}
+function setFont(sz){
+document.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('active'));
+document.getElementById('font-med').classList.remove('active');
+let btn=document.querySelector(`.fbtn[onclick="setFont('${sz}')"]`);
+if(btn)btn.classList.add('active');
+if(sz==='small')document.body.style.fontSize='13px';
+else if(sz==='large')document.body.style.fontSize='17px';
+else document.body.style.fontSize='15px';
+localStorage.setItem('fontsize',sz);
+}
+function loadFont(){
+let sz=localStorage.getItem('fontsize')||'medium';
+setFont(sz);
+}
+function toast(msg){
+let t=document.getElementById('toast');
+t.textContent=msg;t.classList.remove('show');
+void t.offsetWidth;
+t.classList.add('show');
+setTimeout(()=>t.classList.remove('show'),1500);
+}
+init();
+</script>
+</body>
+</html>
