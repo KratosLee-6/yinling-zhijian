@@ -1,0 +1,596 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
+<title>银龄指尖v5 - 中老年手机教程</title>
+<style>
+:root{
+  --p:#FF6B35;--p2:#E55A2B;--p3:#FFF0EA;
+  --bg:#FFF8F5;--card:#fff;--t:#2D1B14;--t2:#5C3D2E;
+  --b:#F0D5C8;--shadow:0 4px 20px rgba(120,60,30,.1);
+  --nav:72px;--w:430px;--r:18px;--r2:12px;
+  --h:#fff;--red:#E74C3C;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Microsoft YaHei','Noto Sans SC',sans-serif;
+  font-size:22px;line-height:1.6;color:var(--t);
+  background:#F5EDE8;
+  -webkit-tap-highlight-color:transparent;
+  -webkit-font-smoothing:antialiased;
+  display:flex;justify-content:center;
+  min-height:100vh;
+  padding-bottom:env(safe-area-inset-bottom,0);
+}
+body.font-small{font-size:18px}
+body.font-medium{font-size:22px}
+body.font-large{font-size:26px}
+.page{display:none;width:100%;max-width:var(--w);padding:16px;padding-bottom:calc(var(--nav) + 24px);min-height:100vh}
+.page.active{display:block}
+
+/* 启动封面 */
+#splash{
+  position:fixed;inset:0;z-index:9999;
+  background:linear-gradient(135deg,#FF6B6B 0%,#FF8E53 100%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  transition:opacity .8s;cursor:pointer;
+}
+#splash .content{text-align:center}
+#splash .logo{font-size:80px;margin-bottom:20px;animation:bounce 2s infinite}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+#splash h1{color:#fff;font-size:36px;font-weight:bold;margin-bottom:10px;text-shadow:0 2px 8px rgba(0,0,0,.2)}
+#splash p{color:rgba(255,255,255,.88);font-size:17px;margin-top:6px}
+#splash .tip{position:absolute;bottom:50px;color:rgba(255,255,255,.6);font-size:14px}
+#splash.fade{opacity:0;pointer-events:none}
+
+/* 顶栏 */
+.header{
+  position:sticky;top:0;z-index:100;
+  background:var(--h);padding:12px 0;margin:-16px -16px 16px;
+  border-bottom:2px solid var(--b);
+}
+.header-row{display:flex;align-items:center;justify-content:space-between;padding:0 4px}
+.header h1{font-size:26px;color:var(--p);font-weight:bold}
+.hdr-btns{display:flex;gap:6px;align-items:center}
+.size-btn{
+  background:#FFF0EA;color:var(--p);border:1.5px solid var(--p);
+  border-radius:8px;padding:5px 10px;font-size:15px;cursor:pointer;
+  font-weight:bold;line-height:1;
+}
+.size-btn:active{background:var(--p);color:#fff}
+.fav-btn{background:none;border:none;font-size:22px;cursor:pointer;padding:4px;line-height:1}
+.back-btn{background:none;border:none;font-size:19px;color:var(--p);cursor:pointer;padding:6px 12px;font-weight:bold}
+
+/* 搜索框 */
+.search-bar{margin:12px 0}
+.search-bar input{
+  width:100%;padding:15px 18px;border-radius:20px;
+  border:2px solid var(--b);font-size:18px;outline:none;
+  background:var(--card);color:var(--t);
+}
+.search-bar input:focus{border-color:var(--p)}
+.search-bar input::placeholder{color:#BBA}
+
+/* 应用网格 */
+.app-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:4px}
+.app-card{
+  background:var(--card);border-radius:var(--r);padding:22px 16px;
+  text-align:center;cursor:pointer;box-shadow:var(--shadow);
+  transition:transform .15s;min-height:120px;display:flex;
+  flex-direction:column;align-items:center;justify-content:center;gap:8px;
+}
+.app-card:active{transform:scale(0.96)}
+.app-card .emoji{font-size:50px;line-height:1}
+.app-card .name{font-size:19px;font-weight:bold;color:var(--t)}
+.app-card .desc{font-size:13px;color:var(--t2);margin-top:2px;line-height:1.4}
+
+/* 步骤 */
+.step-item{padding:20px 0;border-bottom:1px solid var(--b)}
+.step-top{display:flex;align-items:flex-start;gap:14px;margin-bottom:12px}
+.step-num{
+  width:46px;height:46px;flex-shrink:0;
+  background:var(--p);color:#fff;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:23px;font-weight:bold;
+}
+.step-info{flex:1;min-width:0}
+.step-title{font-size:22px;font-weight:bold;color:var(--t);margin-bottom:6px;line-height:1.3}
+.step-text{font-size:20px;color:var(--t2);line-height:1.5;margin-bottom:10px}
+.step-hint{
+  background:#FFF3EE;padding:12px 16px;border-radius:var(--r2);
+  font-size:17px;color:var(--t2);line-height:1.5;
+  border-left:4px solid var(--p);
+}
+.step-img{
+  width:100%;margin-top:14px;border-radius:var(--r2);
+  overflow:hidden;background:#F0EBE7;
+  display:flex;align-items:center;justify-content:center;
+  min-height:160px;max-height:260px;
+}
+.step-img img{width:100%;height:auto;display:block;max-height:260px;object-fit:contain}
+
+/* 底部分页 */
+.nav-bottom{
+  position:fixed;bottom:0;left:50%;transform:translateX(-50%);
+  width:100%;max-width:var(--w);
+  background:var(--h);padding:12px 16px;padding-bottom:calc(12px + env(safe-area-inset-bottom,0));
+  display:flex;align-items:center;justify-content:space-between;
+  box-shadow:0 -4px 16px rgba(0,0,0,.08);z-index:200;
+}
+.nav-btn{
+  padding:13px 22px;background:var(--p);color:#fff;
+  border:none;border-radius:var(--r2);font-size:17px;
+  cursor:pointer;font-weight:bold;min-width:100px;text-align:center;
+}
+.nav-btn:disabled{background:#ccc;cursor:not-allowed}
+.nav-indicator{font-size:16px;color:var(--t2);flex:1;text-align:center}
+
+/* 收藏列表 */
+.list-item{
+  background:var(--card);border-radius:var(--r);padding:16px 18px;
+  margin:10px 0;display:flex;align-items:center;gap:14px;
+  cursor:pointer;box-shadow:var(--shadow);transition:transform .15s;
+}
+.list-item:active{transform:scale(0.98)}
+.list-item .emoji{font-size:40px;flex-shrink:0}
+.list-item .info{flex:1}
+.list-item .app-name{font-size:19px;font-weight:bold;color:var(--t)}
+.list-item .app-desc{font-size:14px;color:var(--t2);margin-top:2px}
+.list-item .del-btn{
+  background:none;border:none;font-size:18px;cursor:pointer;
+  color:#ccc;padding:8px;transition:color .2s;
+}
+.list-item .del-btn:hover{color:var(--red)}
+
+/* 搜索结果 */
+.result-item{
+  background:var(--card);border-radius:var(--r);padding:14px 16px;
+  margin:8px 0;cursor:pointer;box-shadow:var(--shadow);
+  transition:transform .15s;
+}
+.result-item:active{transform:scale(0.98)}
+.result-item .app-name{font-size:19px;font-weight:bold;color:var(--t)}
+.result-item .match-info{font-size:14px;color:var(--t2);margin-top:4px}
+
+/* 空状态 */
+.empty-state{text-align:center;padding:60px 20px}
+.empty-state .icon{font-size:64px;margin-bottom:16px;opacity:.5}
+.empty-state .tip{font-size:18px;color:var(--t2)}
+.empty-state .tip2{font-size:15px;color:#BBA;margin-top:10px}
+
+/* 设置品牌页 */
+.brand-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:8px}
+.brand-card{
+  background:var(--card);border-radius:var(--r);padding:20px 12px;
+  text-align:center;cursor:pointer;box-shadow:var(--shadow);
+  transition:transform .15s;
+}
+.brand-card:active{transform:scale(0.96)}
+.brand-card .icon{font-size:44px;display:block;margin-bottom:8px}
+.brand-card .name{font-size:16px;font-weight:bold;color:var(--t)}
+
+/* 滚动条 */
+::-webkit-scrollbar{width:0}
+</style>
+</head>
+<body>
+
+<!-- 启动封面 -->
+<div id="splash">
+  <div class="content">
+    <div class="logo">❤️</div>
+    <h1>银龄指尖</h1>
+    <p>让爸妈跟上时代</p>
+  </div>
+  <div class="tip">点击任意处进入</div>
+</div>
+
+<!-- 首页 -->
+<div id="home" class="page active">
+  <div class="header">
+    <div class="header-row">
+      <h1>银龄指尖</h1>
+      <div class="hdr-btns">
+        <button class="size-btn" onclick="setFont('small')">小</button>
+        <button class="size-btn" onclick="setFont('medium')">中</button>
+        <button class="size-btn" onclick="setFont('large')">大</button>
+        <button class="fav-btn" onclick="showPage('favorites')">❤️</button>
+      </div>
+    </div>
+  </div>
+  <div class="search-bar">
+    <input type="text" id="searchInput" placeholder="搜索想学的功能，如：微信聊天" oninput="onSearchInput(this)" onfocus="enterSearch()">
+  </div>
+  <div class="app-grid" id="appGrid"></div>
+</div>
+
+<!-- 教程详情 -->
+<div id="detail" class="page">
+  <div class="header">
+    <div class="header-row">
+      <button class="back-btn" onclick="showPage('home')">← 返回</button>
+      <span id="detailTitle" style="font-size:21px;flex:1;text-align:center;font-weight:bold;color:var(--t)">应用名称</span>
+      <button id="detailFavBtn" class="fav-btn" onclick="toggleFav()">♡</button>
+    </div>
+  </div>
+  <div id="stepList"></div>
+  <div class="nav-bottom">
+    <button class="nav-btn" id="prevBtn" onclick="prevStep()">← 上一题</button>
+    <span class="nav-indicator" id="stepIndicator">1/5</span>
+    <button class="nav-btn" id="nextBtn" onclick="nextStep()">下一题 →</button>
+  </div>
+</div>
+
+<!-- 收藏页 -->
+<div id="favorites" class="page">
+  <div class="header">
+    <div class="header-row">
+      <button class="back-btn" onclick="showPage('home')">← 返回</button>
+      <span style="font-size:21px;flex:1;text-align:center;font-weight:bold;color:var(--t)">我的收藏</span>
+      <div style="width:60px"></div>
+    </div>
+  </div>
+  <div id="favList"></div>
+</div>
+
+<!-- 搜索页 -->
+<div id="search" class="page">
+  <div class="header">
+    <div class="header-row">
+      <button class="back-btn" onclick="exitSearch()">← 返回</button>
+      <input type="text" id="searchPageInput" placeholder="搜索教程" oninput="doSearch(this.value)" style="flex:1;border:none;font-size:19px;outline:none;background:transparent;color:var(--t)">
+    </div>
+  </div>
+  <div id="searchResults"></div>
+</div>
+
+<!-- 品牌选择页（手机设置子页面） -->
+<div id="brands" class="page">
+  <div class="header">
+    <div class="header-row">
+      <button class="back-btn" onclick="showPage('home')">← 返回</button>
+      <span style="font-size:21px;flex:1;text-align:center;font-weight:bold;color:var(--t)">选择手机品牌</span>
+      <div style="width:60px"></div>
+    </div>
+  </div>
+  <div class="app-grid" id="brandGrid"></div>
+</div>
+
+<script>
+var tutorials=[
+  {id:"wechat",name:"微信",emoji:"💬",desc:"聊天视频发朋友圈",steps:[
+    {n:1,title:"打开微信",text:"找到绿色微信图标，点击打开",hint:"屏幕上有多个图标？告诉爸妈：那个有白色气泡的就是微信，点一下就好"},
+    {n:2,title:"注册账号",text:"点"注册"，输入手机号",hint:"手机号要能收到短信验证码，让子女帮忙填写"},
+    {n:3,title:"添加好友",text:"点右上角+，选"添加朋友"",hint:"也可以让朋友扫你的二维码，更方便"},
+    {n:4,title:"发送消息",text:"点开好友聊天，打字或发语音",hint:"语音：按住圆形按钮说话，说完松手即可"},
+    {n:5,title:"视频通话",text:"点开聊天，点视频图标拨打",hint:"对方必须在线才能接通，请提前告知"}
+  ]},
+  {id:"taobao",name:"淘宝",emoji:"🛒",desc:"足不出户买遍全国",steps:[
+    {n:1,title:"打开淘宝",text:"找到橙色淘宝图标，点击打开",hint:"有多个橙色图标？选有猫的那个，就是淘宝"},
+    {n:2,title:"搜索商品",text:"点搜索框，输入商品名称",hint:"可以说"老人手机"或拍照搜索同款"},
+    {n:3,title:"选择商品",text:"滑动浏览，点击感兴趣的商品",hint:"注意看价格、销量和评价，评分高更好"},
+    {n:4,title:"加入购物车",text:"选好颜色/规格，点"加入购物车"",hint:"规格就是颜色、大小、数量，选错了可以退"},
+    {n:5,title:"提交订单",text:"点购物车，全选，结算",hint:"一定要核对收货地址和电话是否正确"},
+    {n:6,title:"完成支付",text:"输入密码或刷脸支付",hint:"支付成功后会收到短信通知，截图保存"}
+  ]},
+  {id:"douyin",name:"抖音",emoji:"🎵",desc:"刷短视频欢乐多",steps:[
+    {n:1,title:"打开抖音",text:"找到黑色音符抖音图标，点击打开",hint:"就是那个黑白相间的音符图标，很好认"},
+    {n:2,title:"上下滑动",text:"手指向上滑动，切换下一个视频",hint:"看完了往上刷，新的内容就来了"},
+    {n:3,title:"点赞收藏",text:"双击屏幕或点右边红心点赞",hint:"收藏的视频以后在"我"里还能找到"},
+    {n:4,title:"评论互动",text:"点评论图标，写下自己的想法",hint:"也可以看看别人怎么说，很有乐趣"},
+    {n:5,title:"分享给朋友",text:"点分享图标，选发送方式",hint:"微信、朋友圈都可以分享给子女看"}
+  ]},
+  {id:"amap",name:"高德地图",emoji:"🗺️",desc:"出门不迷路",steps:[
+    {n:1,title:"打开地图",text:"找到蓝色高德地图图标，点击打开",hint:"就是那个有红蓝箭头指向的图标"},
+    {n:2,title:"输入目的地",text:"点搜索框，说出或输入想去的地方",hint:"可以说"菜市场"或具体地址名称"},
+    {n:3,title:"选择路线",text:"查看推荐路线和预计时间",hint:"有步行、公交、驾车多种选择，老人推荐驾车"},
+    {n:4,title:"开始导航",text:"点"导航"按钮，跟随语音行走",hint:"听到"左转"就往左看，听到"右转"就往右"},
+    {n:5,title:"到达目的地",text:"听到"导航结束"就说明到达了",hint:"如果走错了，地图会自动重新规划路线"}
+  ]},
+  {id:"alipay",name:"支付宝",emoji:"💰",desc:"出门不用带现金",steps:[
+    {n:1,title:"打开支付宝",text:"找到蓝色支付宝图标，点击打开",hint:"就是那个有"支"字的蓝色图标"},
+    {n:2,title:"点击付钱",text:"点首页的"付钱"按钮",hint:"打开后把二维码给商家扫一下就可以"},
+    {n:3,title:"扫商家码",text:"点"扫一扫"，对准商家收款码",hint:"手机摄像头要对准二维码，拿稳不要抖"},
+    {n:4,title:"确认金额",text:"核对金额无误后，输入支付密码",hint:"金额不对要立即停止，告诉子女"},
+    {n:5,title:"支付成功",text:"看到"支付成功"就完成了",hint:"截图保存凭证，以防万一需要核对"}
+  ]},
+  {id:"meituan",name:"美团",emoji:"🍔",desc:"在家吃遍美食",steps:[
+    {n:1,title:"打开美团",text:"找到橙色美团图标，点击打开",hint:"就是那个有袋鼠的橙色图标"},
+    {n:2,title:"选择美食",text:"滑动浏览附近的餐厅",hint:"注意看评分和用户评价，越高越好"},
+    {n:3,title:"选择菜品",text:"点进餐厅，选想吃的菜品",hint:"有辣和不辣的选择，选错了可以退"},
+    {n:4,title:"提交订单",text:"确认收货地址，提交订单",hint:"地址一定要正确，错了送不到"},
+    {n:5,title:"支付等待",text:"支付后等待骑手送餐上门",hint:"保持手机畅通，骑手到楼下会打电话"}
+  ]},
+  {id:"shebao",name:"人社局",emoji:"🏛️",desc:"查社保不用跑腿",steps:[
+    {n:1,title:"打开服务",text:"打开微信"城市服务"或人社App",hint:"微信里搜索"城市服务"也能查到，很方便"},
+    {n:2,title:"注册登录",text:"输入身份证号和手机号注册",hint:"密码要记牢，可以写在纸上交给子女保管"},
+    {n:3,title:"绑定社保卡",text:"按提示输入社保卡号绑定",hint:"社保卡号在卡正面可以看到，告诉子女"},
+    {n:4,title:"查询社保",text:"查看养老保险缴费记录和余额",hint:"可以看到公司交了多少，自己交了多少"},
+    {n:5,title:"查询公积金",text:"查看公积金缴存余额和明细",hint:"公积金可以用来贷款买房，余额很重要"}
+  ]},
+  {id:"jiaotong",name:"交管12123",emoji:"🚗",desc:"查违章处理违章",steps:[
+    {n:1,title:"打开App",text:"找到交管12123图标，点击打开",hint:"这是公安部官方软件，可以放心使用"},
+    {n:2,title:"注册账号",text:"输入身份证号和手机号注册",hint:"必须用本人的身份证注册才有效"},
+    {n:3,title:"备案车辆",text:"输入车牌号和车架号绑定车辆",hint:"车架号在行驶证上可以看到，告诉子女"},
+    {n:4,title:"查询违章",text:"查看车辆有没有违章记录",hint:"有违章会显示罚款金额和扣分情况"},
+    {n:5,title:"处理违章",text:"在线处理违章并缴纳罚款",hint:"可以用微信或支付宝直接交钱"}
+  ]},
+  {id:"railway",name:"铁路12306",emoji:"🚄",desc:"买火车票不出门",steps:[
+    {n:1,title:"打开App",text:"找到蓝色12306图标，点击打开",hint:"12306是官方火车票软件，放心使用"},
+    {n:2,title:"注册账号",text:"输入身份证号和手机号注册",hint:"买票前必须先注册账号，让子女帮忙"},
+    {n:3,title:"查询车次",text:"输入出发地和目的地，选择日期",hint:"提前买票更容易有座位，别等到最后"},
+    {n:4,title:"选择座位",text:"选择座位类型和具体座位",hint:"老年人可以选下铺，上下车更方便"},
+    {n:5,title:"支付购票",text:"用微信或支付宝支付票款",hint:"购票成功后会收到短信通知，截图保存"},
+    {n:6,title:"刷证进站",text:"不用取票，直接刷身份证进站",hint:"网络购票可以直接刷证，不用排队取票"}
+  ]},
+  {id:"settings",name:"手机设置",emoji:"⚙️",desc:"调音量调屏幕学基础",steps:[
+    {n:1,title:"打开设置",text:"找到手机上的齿轮设置图标，点击打开",hint:"齿轮图标就是"设置"，所有手机都有"},
+    {n:2,title:"调节音量",text:"按音量键或在声音设置里调节",hint:"铃声、媒体、闹钟音量可以分开调"},
+    {n:3,title:"调节亮度",text:"在"显示"设置里找到亮度，调节合适",hint:"太亮伤眼睛，太暗看不清，调到舒服就好"},
+    {n:4,title:"连接WiFi",text:"在"网络"设置里打开WiFi，选择家里网络",hint:"找到家里WiFi名字，点击，输入密码连接"},
+    {n:5,title:"连接蓝牙",text:"在蓝牙设置里打开蓝牙，配对设备",hint:"蓝牙耳机、音响都需要蓝牙连接才能用"}
+  ]}
+];
+
+var brands=[
+  {id:"huawei",name:"华为",emoji:"📱"},
+  {id:"xiaomi",name:"小米",emoji:"📱"},
+  {id:"oppo",name:"OPPO",emoji:"📱"},
+  {id:"vivo",name:"vivo",emoji:"📱"},
+  {id:"apple",name:"苹果",emoji:"🍎"},
+  {id:"samsung",name:"三星",emoji:"📱"}
+];
+
+var curId=null,curStep=0,curFavs=[],curFont="medium",curKw="";
+
+// ==== 初始化 ====
+(function init(){
+  curFont=localStorage.getItem("ylz_font")||"medium";
+  curFavs=JSON.parse(localStorage.getItem("ylz_favs")||"[]");
+  document.body.className="font-"+curFont;
+  renderHome();
+  renderFavorites();
+  if(localStorage.getItem("ylz_splash")){
+    document.getElementById("splash").style.display="none";
+  }
+})();
+
+function skipSplash(){
+  localStorage.setItem("ylz_splash","1");
+  var sp=document.getElementById("splash");
+  sp.classList.add("fade");
+  setTimeout(function(){sp.style.display="none"},800);
+}
+
+function setFont(s){
+  curFont=s;
+  document.body.className="font-"+s;
+  localStorage.setItem("ylz_font",s);
+}
+
+function showPage(id){
+  document.querySelectorAll(".page").forEach(function(p){p.classList.remove("active")});
+  document.getElementById(id).classList.add("active");
+  if(id==="search"){
+    setTimeout(function(){
+      var inp=document.getElementById("searchPageInput");
+      inp.value=curKw;
+      inp.focus();
+    },50);
+  }
+  if(id==="detail"){
+    showDetail(curId);
+  }
+}
+
+function onSearchInput(v){
+  curKw=v;
+  if(v.length>0) showPage("search");
+  else showPage("home");
+  doSearch(v);
+}
+
+function enterSearch(){
+  curKw=document.getElementById("searchInput").value;
+  doSearch(curKw);
+}
+
+function exitSearch(){
+  document.getElementById("searchInput").value="";
+  curKw="";
+  showPage("home");
+}
+
+function renderHome(){
+  var g=document.getElementById("appGrid");
+  g.innerHTML="";
+  tutorials.forEach(function(t){
+    var c=document.createElement("div");
+    c.className="app-card";
+    c.onclick=function(){
+      curId=t.id;
+      showPage("detail");
+    };
+    c.innerHTML='<span class="emoji">'+t.emoji+'</span><span class="name">'+t.name+'</span><span class="desc">'+t.desc+'</span>';
+    g.appendChild(c);
+  });
+}
+
+function showDetail(id){
+  if(!id) return;
+  var t=tutorials.find(function(x){return x.id===id;});
+  if(!t) return;
+  document.getElementById("detailTitle").textContent=t.name+" "+t.emoji;
+  curStep=0;
+  updateFavBtn();
+  renderStep();
+}
+
+function renderStep(){
+  var t=tutorials.find(function(x){return x.id===curId;});
+  if(!t) return;
+  var steps=t.steps;
+  var s=steps[curStep];
+  var total=steps.length;
+  document.getElementById("stepIndicator").textContent=(curStep+1)+"/"+total;
+  document.getElementById("prevBtn").disabled=(curStep===0);
+  document.getElementById("nextBtn").disabled=(curStep===total-1);
+  var el=document.getElementById("stepList");
+  var svg=svgPlaceholder(s.title);
+  var imgUrl="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(svg);
+  el.innerHTML=
+    '<div class="step-item">'+
+      '<div class="step-top">'+
+        '<div class="step-num">'+s.n+'</div>'+
+        '<div class="step-info">'+
+          '<div class="step-title">'+s.title+'</div>'+
+          '<div class="step-text">'+s.text+'</div>'+
+        '</div>'+
+      '</div>'+
+      '<div class="step-hint">💡 '+s.hint+'</div>'+
+      '<div class="step-img"><img src="'+imgUrl+'" alt="配图"></div>'+
+    '</div>';
+}
+
+function svgPlaceholder(text){
+  var ch=text.charAt(0)||"?";
+  var colors=["#FF6B6B","#4ECDC4","#45B7D1","#96CEB4","#F7DC6F","#BB8FCE","#F8B500","#26C6DA","#EC7063","#58D68D"];
+  var color=colors[Math.abs(ch.charCodeAt(0)||0)%colors.length];
+  return '<svg xmlns="http://www.w3.org/2000/svg" width="240" height="320" viewBox="0 0 240 320">'+
+    '<rect width="240" height="320" fill="#F5EDE8"/>'+
+    '<rect x="40" y="30" width="160" height="260" rx="16" fill="'+color+'" opacity="0.15"/>'+
+    '<rect x="40" y="30" width="160" height="260" rx="16" fill="none" stroke="'+color+'" stroke-width="3" stroke-dasharray="8,4"/>'+
+    '<text x="120" y="165" text-anchor="middle" fill="'+color+'" font-size="72" font-weight="bold" font-family="sans-serif">'+ch+'</text>'+
+    '<text x="120" y="210" text-anchor="middle" fill="'+color+'" font-size="18" font-family="sans-serif">步骤配图位置</text>'+
+  '</svg>';
+}
+
+function prevStep(){
+  var t=tutorials.find(function(x){return x.id===curId;});
+  if(!t) return;
+  if(curStep>0){curStep--;renderStep();scrollTo(0,0);}
+}
+function nextStep(){
+  var t=tutorials.find(function(x){return x.id===curId;});
+  if(!t) return;
+  if(curStep<t.steps.length-1){curStep++;renderStep();scrollTo(0,0);}
+}
+
+function updateFavBtn(){
+  var isFav=curFavs.indexOf(curId)>=0;
+  document.getElementById("detailFavBtn").textContent=isFav?"❤️":"♡";
+}
+
+function toggleFav(){
+  var idx=curFavs.indexOf(curId);
+  if(idx>=0) curFavs.splice(idx,1);
+  else curFavs.push(curId);
+  localStorage.setItem("ylz_favs",JSON.stringify(curFavs));
+  updateFavBtn();
+  renderFavorites();
+}
+
+function renderFavorites(){
+  var el=document.getElementById("favList");
+  if(curFavs.length===0){
+    el.innerHTML='<div class="empty-state"><div class="icon">❤️</div><div class="tip">还没有收藏</div><div class="tip2">点击教程页的心形按钮添加收藏</div></div>';
+    return;
+  }
+  el.innerHTML="";
+  curFavs.forEach(function(id){
+    var t=tutorials.find(function(x){return x.id===id;});
+    if(!t) return;
+    var item=document.createElement("div");
+    item.className="list-item";
+    item.onclick=function(){
+      curId=t.id;
+      showPage("detail");
+    };
+    item.innerHTML=
+      '<span class="emoji">'+t.emoji+'</span>'+
+      '<div class="info"><div class="app-name">'+t.name+'</div><div class="app-desc">'+t.desc+'</div></div>'+
+      '<button class="del-btn" onclick="event.stopPropagation();delFav(\''+id+'\')">✕</button>';
+    el.appendChild(item);
+  });
+}
+
+function delFav(id){
+  curFavs=curFavs.filter(function(x){return x!==id;});
+  localStorage.setItem("ylz_favs",JSON.stringify(curFavs));
+  updateFavBtn();
+  renderFavorites();
+}
+
+function doSearch(kw){
+  curKw=kw;
+  var el=document.getElementById("searchResults");
+  if(!kw||kw.trim().length===0){
+    el.innerHTML='<div class="empty-state"><div class="icon">🔍</div><div class="tip">输入关键词搜索教程</div></div>';
+    return;
+  }
+  var k=kw.trim().toLowerCase();
+  var results=[];
+  tutorials.forEach(function(t){
+    var matched=[];
+    t.steps.forEach(function(s){
+      if(s.title.indexOf(k)>=0||s.text.indexOf(k)>=0||t.name.indexOf(k)>=0){
+        matched.push(s);
+      }
+    });
+    if(matched.length>0){
+      results.push({t:t,steps:matched});
+    }
+  });
+  if(results.length===0){
+    el.innerHTML='<div class="empty-state"><div class="icon">🔍</div><div class="tip">没有找到相关教程</div><div class="tip2">试试其他关键词，如：微信、支付、导航</div></div>';
+    return;
+  }
+  var html='<div style="font-size:15px;color:var(--t2);margin:8px 0 12px">找到 '+results.length+' 个相关教程</div>';
+  results.forEach(function(r){
+    html+='<div class="result-item" onclick="curId=\''+r.t.id+'\';showPage(\'detail\')">'+
+      '<div class="app-name">'+r.t.emoji+' '+r.t.name+'<span style="font-size:14px;font-weight:normal;color:var(--t2)"> — 含'+r.steps.length+'个相关步骤</span></div>';
+    r.steps.slice(0,2).forEach(function(s){
+      html+='<div class="match-info" style="margin-top:4px">▪ '+s.title+': '+s.text+'</div>';
+    });
+    if(r.steps.length>2) html+='<div class="match-info" style="color:#BBA">+ 还有'+(r.steps.length-2)+'个相关步骤</div>';
+    html+='</div>';
+  });
+  el.innerHTML=html;
+}
+
+// 品牌选择（手机设置点击后）
+document.getElementById("appGrid").addEventListener("click",function(e){
+  var card=e.target.closest(".app-card");
+  if(!card) return;
+  var idx=Array.from(document.querySelectorAll(".app-card")).indexOf(card);
+  var t=tutorials[idx];
+  if(!t) return;
+  curId=t.id;
+  if(curId==="settings"){
+    showPage("brands");
+    renderBrands();
+  } else {
+    showPage("detail");
+  }
+},true);
+
+function renderBrands(){
+  var g=document.getElementById("brandGrid");
+  g.innerHTML="";
+  brands.forEach(function(b){
+    var c=document.createElement("div");
+    c.className="brand-card";
+    c.onclick=function(){
+      alert(b.name+"设置教程开发中，敬请期待！");
+    };
+    c.innerHTML='<span class="icon">'+b.emoji+'</span><span class="name">'+b.name+'</span>';
+    g.appendChild(c);
+  });
+}
+
+// 封面点击
+document.getElementById("splash").addEventListener("click",skipSplash);
+</script>
+</body>
+</html>
