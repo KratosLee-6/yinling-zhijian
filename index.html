@@ -4,7 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>银龄指尖 - 让爸妈跟上时代</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>❤️</text></svg>">
 <style>
+/* 封面启动页 */
+#splash{position:fixed;inset:0;background:linear-gradient(135deg,#FF6B6B 0%,#FF8E53 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;transition:opacity .8s}
+#splash .logo{font-size:52px;margin-bottom:12px}
+#splash h1{color:#fff;font-size:32px;margin-bottom:8px;text-shadow:0 2px 8px rgba(0,0,0,.2)}
+#splash p{color:rgba(255,255,255,.85);font-size:16px}
+#splash .sub{margin-top:30px;color:rgba(255,255,255,.7);font-size:13px}
+#splash.fade{opacity:0;pointer-events:none}
+</style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{--p:#FF6B6B;--s:#4ECDC4;--bg:#FFF9F0;--t:#333;--w:#fff;--g:#888}
 body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--t);max-width:430px;margin:0 auto;min-height:100vh}
@@ -75,10 +84,19 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei
 </head>
 <body>
 
+<!-- 封面启动页 -->
+<div id="splash">
+  <div class="logo">❤️</div>
+  <h1>银龄指尖</h1>
+  <p>让爸妈跟上时代</p>
+  <div class="sub">— 专为中老年设计 —</div>
+</div>
+
 <!-- 一级：首页 -->
 <div id="page-home" class="page active">
   <div class="header"><h1>❤️ 银龄指尖</h1><p>让爸妈跟上时代</p></div>
-  <div class="sbox"><span style="color:#999">🔍</span><input type="text" placeholder="搜索软件..." readonly></div>
+  <div class="sbox"><span style="color:#999">🔍</span><input type="text" id="search-input" placeholder="搜索软件…" oninput="onSearch(this.value)"></div>
+  <div id="search-tip" style="font-size:12px;color:#aaa;padding:0 0 8px;display:none">找到 <span id="search-count">0</span> 个结果</div>
   <div class="sec">📱 常用软件</div>
   <div class="grid" id="app-grid"></div>
 </div>
@@ -129,7 +147,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei
     </div>
   </div>
   <div class="sg">
-    <div class="at"><p><strong>银龄指尖 V1.0</strong></p><p style="margin-top:8px">专为中老年用户打造的手机教程平台</p><p style="margin-top:5px">用最简单的步骤图解</p><p style="margin-top:5px">让每个人都能学会使用智能手机</p></div>
+    <div class="at"><p><strong>银龄指尖 V5.0</strong></p><p style="margin-top:8px">专为中老年用户打造的手机教程平台</p><p style="margin-top:5px">用最简单的步骤图解</p><p style="margin-top:5px">让每个人都能学会使用智能手机</p></div>
   </div>
 </div>
 
@@ -150,7 +168,7 @@ const apps=[
 {id:'douyin',name:'抖音',desc:'刷视频',icon:'assets/icons/抖音图标.png',type:'app'},
 {id:'amap',name:'高德地图',desc:'导航、打车',icon:'assets/icons/高德图标.png',type:'app'},
 {id:'12306',name:'铁路12306',desc:'买火车票',icon:'assets/icons/12306图标.png',type:'app'},
-{id:'phone',name:'手机设置',desc:'WiFi、内存清理',icon:'assets/icons/苹果手机图标.png',type:'brand'},
+{id:'phone',name:'手机设置',desc:'WiFi、内存清理',icon:'assets/icons/手机设置图标.png',type:'brand'},
 {id:'alipay',name:'支付宝',desc:'付款、收款',icon:'assets/icons/支付宝图标.png',type:'app'},
 {id:'meituan',name:'美团',desc:'外卖、买菜',icon:'assets/icons/美团图标.png',type:'app'},
 {id:'social',name:'人社局',desc:'查社保、挂号',icon:'assets/icons/人社局图标.png',type:'app'},
@@ -186,65 +204,92 @@ traffic:[{id:'tf-fine',name:'查违章',sub:'看罚单缴纳记录',icon:'🚗'}
 const stepData={
 'hw-wifi':[{s:1,d:'打开手机【设置】'},{s:2,d:'点击【WLAN】或【无线网络】'},{s:3,d:'找到并点击您的WiFi名称'},{s:4,d:'输入WiFi密码，点击【连接】'}],
 'xm-wifi':[{s:1,d:'打开手机【设置】'},{s:2,d:'点击【WLAN】'},{s:3,d:'开启WLAN，选择您的WiFi'},{s:4,d:'输入密码，点击【连接】'}],
+'op-wifi':[{s:1,d:'打开手机【设置】'},{s:2,d:'点击【WLAN】'},{s:3,d:'开启WLAN，选择您的WiFi'},{s:4,d:'输入密码，点击【连接】'}],
+'vv-wifi':[{s:1,d:'打开手机【设置】'},{s:2,d:'点击【WLAN】'},{s:3,d:'开启WLAN，选择您的WiFi'},{s:4,d:'输入密码，点击【连接】'}],
 'ap-wifi':[{s:1,d:'打开手机【设置】（灰色齿轮图标）'},{s:2,d:'点击【无线局域网】或【Wi-Fi】'},{s:3,d:'开启无线局域网，选择WiFi名称'},{s:4,d:'输入密码，点击【加入】'}],
-'wx-msg':[{s:1,d:'打开微信，点击一个好友'},{s:2,d:'点击屏幕底部的输入框'},{s:3,d:'输入想说的话'},{s:4,d:'点击【发送】按钮'}]
+'ss-wifi':[{s:1,d:'打开手机【设置】'},{s:2,d:'点击【连接】'},{s:3,d:'点击【WLAN】'},{s:4,d:'选择WiFi并输入密码'}],
+'hw-storage':[{s:1,d:'打开【设置】'},{s:2,d:'点击【存储】'},{s:3,d:'点击【清理加速】'},{s:4,d:'等待清理完成'}],
+'xm-storage':[{s:1,d:'打开【设置】'},{s:2,d:'点击【存储与备份】'},{s:3,d:'点击【垃圾清理】'},{s:4,d:'点击【一键清理】'}],
+'op-storage':[{s:1,d:'打开【设置】'},{s:2,d:'点击【存储】'},{s:3,d:'点击【清理】'},{s:4,d:'等待清理完成'}],
+'vv-storage':[{s:1,d:'打开【设置】'},{s:2,d:'点击【运存与存储空间】'},{s:3,d:'点击【清理存储空间】'},{s:4,d:'等待清理完成'}],
+'ap-storage':[{s:1,d:'打开【设置】'},{s:2,d:'点击【通用】'},{s:3,d:'点击【iPhone存储空间】'},{s:4,d:'查看可用容量'}],
+'ss-storage':[{s:1,d:'打开【设置】'},{s:2,d:'点击【电池和设备维护】'},{s:3,d:'点击【存储】'},{s:4,d:'点击【立即清理】'}],
+'hw-bluetooth':[{s:1,d:'打开【设置】'},{s:2,d:'点击【蓝牙】'},{s:3,d:'开启蓝牙，搜索设备'},{s:4,d:'点击设备名称配对'}],
+'xm-bluetooth':[{s:1,d:'打开【设置】'},{s:2,d:'点击【蓝牙】'},{s:3,d:'开启蓝牙，搜索设备'},{s:4,d:'点击设备名称配对'}],
+'op-bluetooth':[{s:1,d:'打开【设置】'},{s:2,d:'点击【蓝牙】'},{s:3,d:'开启蓝牙，搜索设备'},{s:4,d:'点击设备名称配对'}],
+'vv-bluetooth':[{s:1,d:'打开【设置】'},{s:2,d:'点击【蓝牙】'},{s:3,d:'开启蓝牙，搜索设备'},{s:4,d:'点击设备名称配对'}],
+'ap-bluetooth':[{s:1,d:'打开【设置】'},{s:2,d:'点击【蓝牙】'},{s:3,d:'开启蓝牙，搜索设备'},{s:4,d:'点击设备名称配对'}],
+'ss-bluetooth':[{s:1,d:'打开【设置】'},{s:2,d:'点击【连接】'},{s:3,d:'点击【蓝牙】'},{s:4,d:'开启蓝牙，搜索并配对'}],
+'hw-update':[{s:1,d:'打开【设置】'},{s:2,d:'点击【系统和更新】'},{s:3,d:'点击【软件更新】'},{s:4,d:'点击【检查更新】'}],
+'xm-update':[{s:1,d:'打开【设置】'},{s:2,d:'点击【我的设备】'},{s:3,d:'点击【MIUI版本】'},{s:4,d:'点击【检查更新】'}],
+'op-update':[{s:1,d:'打开【设置】'},{s:2,d:'点击【软件更新】'},{s:3,d:'点击【检查更新】'},{s:4,d:'等待下载安装'}],
+'vv-update':[{s:1,d:'打开【设置】'},{s:2,d:'点击【系统升级】'},{s:3,d:'点击【检查更新】'},{s:4,d:'等待下载安装'}],
+'ap-update':[{s:1,d:'打开【设置】'},{s:2,d:'点击【通用】'},{s:3,d:'点击【软件更新】'},{s:4,d:'点击【下载并安装】'}],
+'ss-update':[{s:1,d:'打开【设置】'},{s:2,d:'点击【软件更新】'},{s:3,d:'点击【下载并安装】'},{s:4,d:'等待更新完成'}],
+'wx-msg':[{s:1,d:'打开微信，点击一个好友'},{s:2,d:'点击屏幕底部的输入框'},{s:3,d:'输入想说的话'},{s:4,d:'点击【发送】按钮'}],
+'wx-video':[{s:1,d:'打开微信，点击好友'},{s:2,d:'点击右上角【+】'},{s:3,d:'选择【视频通话】'},{s:4,d:'等待对方接听'}],
+'wx-pay':[{s:1,d:'打开微信，点击【我】'},{s:2,d:'点击【服务】'},{s:3,d:'点击【收付款】'},{s:4,d:'出示付款码'}],
+'wx-moments':[{s:1,d:'打开微信，点击【发现】'},{s:2,d:'点击【朋友圈】'},{s:3,d:'点击右上角【相机】'},{s:4,d:'选照片发布'}],
+'wx-friend':[{s:1,d:'打开微信'},{s:2,d:'点击右上角【+】'},{s:3,d:'点击【添加朋友】'},{s:4,d:'输入手机号搜索添加'}],
+'wx-pic':[{s:1,d:'打开聊天窗口'},{s:2,d:'点击底部【+】'},{s:3,d:'点击【图片】'},{s:4,d:'选择照片发送'}],
+'wx-voice':[{s:1,d:'打开聊天窗口'},{s:2,d:'长按底部麦克风'},{s:3,d:'说话后松开发送'},{s:4,d:'看到波纹表示发送成功'}],
+'wx-hongbao':[{s:1,d:'打开聊天窗口'},{s:2,d:'点击底部【+】'},{s:3,d:'点击【红包】'},{s:4,d:'输入金额发送红包'}],
+'wx-sticker':[{s:1,d:'打开聊天窗口'},{s:2,d:'点击输入框旁的【笑脸】'},{s:3,d:'滑动选择表情包'},{s:4,d:'点击发送'}],
+'wx-weather':[{s:1,d:'打开微信'},{s:2,d:'搜索"城市名+天气"'},{s:3,d:'查看天气预报'},{s:4,d:'点击关注可每日推送'}],
+'wx-privacy':[{s:1,d:'打开微信，点击【我】'},{s:2,d:'点击【设置】'},{s:3,d:'点击【隐私】'},{s:4,d:'设置朋友圈可见范围'}],
+'wx-group':[{s:1,d:'打开微信'},{s:2,d:'点击【通讯录】'},{s:3,d:'点击【群聊】'},{s:4,d:'选择群进入'}],
+'wx-top':[{s:1,d:'长按需要置顶的聊天'},{s:2,d:'弹出菜单后选择【置顶】'},{s:3,d:'该聊天显示在最上方'},{s:4,d:'取消置顶同操作'}],
+'wx-transfer':[{s:1,d:'打开聊天窗口'},{s:2,d:'点击底部【+】'},{s:3,d:'点击【转账】'},{s:4,d:'输入金额和密码转账'}],
+'wx-search':[{s:1,d:'打开微信'},{s:2,d:'点击顶部搜索框'},{s:3,d:'输入关键词'},{s:4,d:'点击搜索结果进入'}],
+'wx-article':[{s:1,d:'打开文章'},{s:2,d:'点击右上角【...】'},{s:3,d:'点击【收藏】'},{s:4,d:'去【我-收藏】查看'}],
+'wx-moments-view':[{s:1,d:'打开微信'},{s:2,d:'点击【发现】'},{s:3,d:'点击【朋友圈】'},{s:4,d:'上下滑动浏览'}],
+'ali-pay':[{s:1,d:'打开支付宝'},{s:2,d:'点击【付钱】'},{s:3,d:'向商家出示付款码'},{s:4,d:'输入密码完成支付'}],
+'ali-receive':[{s:1,d:'打开支付宝'},{s:2,d:'点击【收钱】'},{s:3,d:'向对方展示收款码'},{s:4,d:'等待对方扫码转账'}],
+'ali-huafei':[{s:1,d:'打开支付宝'},{s:2,d:'点击【充值中心】'},{s:3,d:'输入手机号和金额'},{s:4,d:'确认支付'}],
+'tb-search':[{s:1,d:'打开淘宝'},{s:2,d:'点击顶部搜索框'},{s:3,d:'输入商品名称'},{s:4,d:'点击【搜索】'}],
+'tb-cart':[{s:1,d:'选择商品规格'},{s:2,d:'点击【加入购物车】'},{s:3,d:'去购物车确认'},{s:4,d:'点击【结算】'}],
+'tb-buy':[{s:1,d:'确认收货地址'},{s:2,d:'选择支付方式'},{s:3,d:'点击【提交订单】'},{s:4,d:'完成支付'}],
+'dy-watch':[{s:1,d:'打开抖音'},{s:2,d:'上下滑动浏览视频'},{s:3,d:'双击屏幕点赞'},{s:4,d:'点击评论互动'}],
+'dy-like':[{s:1,d:'看到喜欢的视频'},{s:2,d:'点击右侧【爱心】'},{s:3,d:'点击【收藏】'},{s:4,d:'去【我】查看收藏'}],
+'dy-search':[{s:1,d:'打开抖音'},{s:2,d:'点击顶部搜索框'},{s:3,d:'输入想看的内容'},{s:4,d:'点击视频观看'}],
+'am-nav':[{s:1,d:'打开高德地图'},{s:2,d:'点击【路线】'},{s:3,d:'输入目的地'},{s:4,d:'选择出行方式导航'}],
+'am-taxi':[{s:1,d:'打开高德地图'},{s:2,d:'点击【打车】'},{s:3,d:'输入出发地和目的地'},{s:4,d:'选择车型下单'}],
+'mt-food':[{s:1,d:'打开美团'},{s:2,d:'点击【外卖】'},{s:3,d:'选择商家和菜品'},{s:4,d:'确认下单并支付'}],
+'mt-buy':[{s:1,d:'打开美团'},{s:2,d:'点击【美团买菜】'},{s:3,d:'选择菜品加入购物车'},{s:4,d:'结算后等待配送'}],
+'so-insurance':[{s:1,d:'打开人社局App'},{s:2,d:'点击【社保查询】'},{s:3,d:'输入身份证登录'},{s:4,d:'查看缴纳记录'}],
+'so-reg':[{s:1,d:'打开人社局App'},{s:2,d:'点击【预约挂号】'},{s:3,d:'选择医院和科室'},{s:4,d:'选择日期预约'}],
+'tf-fine':[{s:1,d:'打开交管12123'},{s:2,d:'点击【备案车辆】'},{s:3,d:'添加车牌信息'},{s:4,d:'查询违章并处理'}],
+'tf-book':[{s:1,d:'打开交管12123'},{s:2,d:'点击【考试预约】'},{s:3,d:'选择考场和日期'},{s:4,d:'确认预约'}],
+'tr-search':[{s:1,d:'打开铁路12306'},{s:2,d:'输入出发地和目的地'},{s:3,d:'选择出发日期'},{s:4,d:'查询余票'}],
+'tr-buy':[{s:1,d:'选择车次和座位'},{s:2,d:'填写乘客信息'},{s:3,d:'确认订单并支付'},{s:4,d:'收到购票成功短信'}]
 };
-let curApp=null,curBrand=null,curTut=null,prevPage='home';
-let favorites=JSON.parse(localStorage.getItem('favs')||'[]');
-function init(){renderAppGrid();renderBrandGrid();renderFavs();loadFont()}
-function renderAppGrid(){
-let h='';
-apps.forEach(a=>{
-let ec="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%23ddd%22 width=%22100%22 height=%22100%22 rx=%2220%22/><text x=%2250%22 y=%2255%22 text-anchor=%22middle%22 font-size=%2230%22>"+a.name[0]+"</text></svg>'";
-h+=`<div class="card ${a.type==='brand'?'hl':''}" onclick="openApp('${a.id}')"><img class="ic" src="${a.icon}" onerror="${ec}"><div class="nm">${a.name}</div><div class="ds">${a.desc}</div></div>`;
-});
-document.getElementById('app-grid').innerHTML=h;
-}
-function renderBrandGrid(){
-let h='';
-brands.forEach(b=>{
-let ec="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%234A90D9%22 width=%22100%22 height=%22100%22 rx=%2220%22/><text x=%2250%22 y=%2255%22 text-anchor=%22middle%22 font-size=%2225%22 fill=%22white%22>"+b.name[0]+"</text></svg>'";
-h+=`<div class="bcard" onclick="openBrand('${b.id}')"><img class="ic" src="${b.icon}" onerror="${ec}"><div class="nm">${b.name}</div></div>`;
-});
-document.getElementById('brand-grid').innerHTML=h;
-}
-function showPage(id){
-document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-document.getElementById('page-'+id).classList.add('active');
-document.querySelectorAll('.tabitem').forEach((t,i)=>t.classList.remove('active'));
-if(id==='home'||id==='favorites'||id==='settings'){
-document.querySelectorAll('.tabitem')[['home','favorites','settings'].indexOf(id)].classList.add('active');
-}
-}
-function openApp(id){
-curApp=apps.find(a=>a.id===id);
-if(!curApp)return;
-if(id==='phone'){prevPage='home';showPage('brand-select');return;}
-document.getElementById('app-detail-title').textContent=curApp.name;
-let tuts=appTuts[id]||[];
-let h=`<div class="theader"><img class="ic" src="${curApp.icon}"><h2>${curApp.name}</h2><p>${curApp.desc}</p></div><div class="tlist">📚 教程目录</div>`;
-tuts.forEach((t,i)=>{h+=`<div class="titem" onclick="openTut('${t.id}','${id}','app','${curApp.name}')"><div class="num">${i+1}</div><div class="info"><div class="ti">${t.icon} ${t.name}</div><div class="sub">${t.sub||''}</div></div><span class="ar">›</span></div>`;});
-document.getElementById('app-detail-content').innerHTML=h;
-prevPage='app-detail';
-showPage('app-detail');
-}
-function openBrand(id){
-curBrand=brands.find(b=>b.id===id);
-if(!curBrand)return;
-document.getElementById('brand-title').textContent=curBrand.name+' 设置教程';
-let tuts=brandTuts[id]||[];
-let h=`<div class="theader"><img class="ic" src="${curBrand.icon}"><h2>${curBrand.name} 手机设置</h2><p>选择要学习的功能</p></div><div class="tlist">📚 教程目录</div>`;
-tuts.forEach((t,i)=>{h+=`<div class="titem" onclick="openTut('${t.id}','${id}','brand','${curBrand.name}')"><div class="num">${i+1}</div><div class="info"><div class="ti">${t.icon} ${t.name}</div><div class="sub">${t.sub}</div></div><span class="ar">›</span></div>`;});
-document.getElementById('brand-tutorial-content').innerHTML=h;
-prevPage='brand-tutorial';
-showPage('brand-tutorial');
-}
-function openTut(id,pid,ptype,pname){
-curTut={id,pid,ptype,pname};
-document.getElementById('step-title').textContent=id.split('-').pop();
-let steps=stepData[id]||[{s:1,d:'第一步操作说明'},{s:2,d:'第二步操作说明'},{s:3,d:'第三步操作说明'}];
-let h='';
-steps.forEach(s=>{h+=`<div class="sc"><div style="background:linear-gradient(135deg,#667eea,#764ba2);height:180px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:42px">📱 步骤${s.s}</div><div class="desc"><span class="badge">${s.s}</span>${s.d}</div></div>`;});
+var imgMap = {
+  'wx-msg':'微信01_发消息.png','wx-video':'微信02_视频通话.png','wx-moments':'微信03_发朋友圈.png',
+  'wx-pay':'微信04_收付款.png','wx-friend':'微信05_添加好友.png','wx-pic':'微信06_发送图片.png',
+  'wx-voice':'微信07_语音输入.png','wx-hongbao':'微信08_发送红包.png','wx-sticker':'微信09_使用表情包.png',
+  'wx-moments-view':'微信10_查看朋友圈.png','wx-article':'微信11_收藏文章.png','wx-mpay':'微信12_使用微信支付.png',
+  'wx-huafei':'微信13_充值话费.png','wx-weather':'微信14_查天气.png','wx-privacy':'微信15_设置朋友圈权限.png',
+  'wx-group':'微信16_加入群聊.png','wx-top':'微信17_置顶聊天.png','wx-transfer':'微信18_转账.png',
+  'wx-search':'微信19_查找聊天记录.png',
+  'ali-pay':'支付宝_付款.png','ali-receive':'支付宝图标.png','ali-huafei':'支付宝图标.png',
+  'tb-search':'淘宝_搜索商品.png','tb-cart':'淘宝图标.png','tb-buy':'淘宝图标.png',
+  'dy-watch':'抖音_刷视频.png','dy-like':'抖音图标.png','dy-search':'抖音图标.png',
+  'am-nav':'高德_导航.png','am-taxi':'高德图标.png',
+  'mt-food':'美团_点外卖.png','mt-buy':'美团图标.png',
+  'so-insurance':'人社局_查社保.png','so-reg':'人社局图标.png',
+  'tf-fine':'交管12123_查违章.png','tf-book':'12123图标.png',
+  'tr-search':'12306_查询车次.png','tr-buy':'12306图标.png',
+  'hw-wifi':'华为手机图标.png','hw-storage':'华为手机图标.png','hw-bluetooth':'华为手机图标.png','hw-update':'华为手机图标.png',
+  'xm-wifi':'小米手机图标.png','xm-storage':'小米手机图标.png','xm-bluetooth':'小米手机图标.png','xm-update':'小米手机图标.png',
+  'op-wifi':'OPPO手机图标.png','op-storage':'OPPO手机图标.png','op-bluetooth':'OPPO手机图标.png','op-update':'OPPO手机图标.png',
+  'vv-wifi':'vivo手机图标.png','vv-storage':'vivo手机图标.png','vv-bluetooth':'vivo手机图标.png','vv-update':'vivo手机图标.png',
+  'ap-wifi':'苹果手机图标.png','ap-storage':'苹果手机图标.png','ap-bluetooth':'苹果手机图标.png','ap-update':'苹果手机图标.png',
+  'ss-wifi':'三星手机图标.png','ss-storage':'三星手机图标.png','ss-bluetooth':'三星手机图标.png','ss-update':'三星手机图标.png'
+};
+var tutImg = imgMap[id] || '微信图标.png';
+var steps=stepData[id]||[{s:1,d:'第一步'},{s:2,d:'第二步'},{s:3,d:'第三步'}];
+var h='<div class="sc"><img src="assets/'+tutImg+'" style="width:100%;max-height:260px;object-fit:contain;background:#f5f5f5" onerror="this.style.display=\'none\'"><div class="desc"><span class="badge">教程</span>'+id.split('-').pop()+'</div></div>';
+steps.forEach(function(s,i){h+='<div class="titem"><div class="num">'+s.s+'</div><div class="info"><div class="ti">'+s.d+'</div><div class="sub">第 '+(i+1)+' 步</div></div></div>';});
 document.getElementById('step-content').innerHTML=h;
 updateFavBtn();
 showPage('tutorial-step');
