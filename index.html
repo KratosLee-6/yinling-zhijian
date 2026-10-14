@@ -1,351 +1,359 @@
-﻿<!DOCTYPE html>
-<html lang="zh-CN">
+<!DOCTYPE html>
+<html lang="zh-CN" class="font-medium">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+<meta name="theme-color" content="#FF6B35">
 <title>银龄指尖 - 让爸妈跟上时代</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>❤️</text></svg>">
 <style>
-/* 封面启动页 */
-#splash{position:fixed;inset:0;background:linear-gradient(135deg,#FF6B6B 0%,#FF8E53 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;transition:opacity .8s}
-#splash .logo{font-size:52px;margin-bottom:12px}
-#splash h1{color:#fff;font-size:32px;margin-bottom:8px;text-shadow:0 2px 8px rgba(0,0,0,.2)}
-#splash p{color:rgba(255,255,255,.85);font-size:16px}
-#splash .sub{margin-top:30px;color:rgba(255,255,255,.7);font-size:13px}
-#splash.fade{opacity:0;pointer-events:none}
-</style>
+:root{
+  --p:#FF6B35;--p2:#E55A2B;--p3:#FFF0EA;
+  --bg:#FFF8F5;--card:#fff;--t:#2D1B14;--t2:#5C3D2E;
+  --b:#F0D5C8;--shadow:0 4px 20px rgba(120,60,30,.1);
+  --nav:76px;--w:430px;--r:18px;--r2:12px;
+  --red:#E74C3C;--green:#27AE60;
+}
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--p:#FF6B6B;--s:#4ECDC4;--bg:#FFF9F0;--t:#333;--w:#fff;--g:#888}
-body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--t);max-width:430px;margin:0 auto;min-height:100vh}
-.page{display:none;padding:16px;padding-bottom:80px;min-height:100vh}
+html{font-size:22px}
+html.font-small{font-size:18px}
+html.font-medium{font-size:22px}
+html.font-large{font-size:26px}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Microsoft YaHei','Noto Sans SC',sans-serif;
+  line-height:1.6;color:var(--t);background:#F5EDE8;
+  -webkit-tap-highlight-color:transparent;-webkit-font-smoothing:antialiased;
+  display:flex;justify-content:center;min-height:100vh;
+}
+.page{display:none;width:100%;max-width:var(--w);padding:16px;padding-bottom:calc(var(--nav) + 28px);min-height:100vh}
 .page.active{display:block}
-.header{text-align:center;padding:20px 0}
-.header h1{font-size:26px;color:var(--p);margin-bottom:6px}
-.header p{font-size:14px;color:var(--g)}
-.sbox{background:var(--w);border-radius:12px;padding:12px 16px;margin:12px 0;display:flex;align-items:center}
-.sbox input{flex:1;border:none;font-size:15px;margin-left:10px;outline:none}
-.sec{font-size:15px;font-weight:bold;margin:14px 0 10px}
-.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-.card{background:var(--w);border-radius:14px;padding:14px;text-align:center;box-shadow:0 2px 6px rgba(0,0,0,0.06);cursor:pointer}
-.card:active{transform:scale(0.97)}
-.card.hl{border:2px solid var(--p)}
-.ic{width:52px;height:52px;margin:0 auto 6px;border-radius:12px;object-fit:cover}
-.nm{font-size:15px;font-weight:bold}
-.ds{font-size:11px;color:var(--g);margin-top:3px}
-.bbar{display:flex;align-items:center;padding:10px 0;border-bottom:1px solid #eee;margin-bottom:14px}
-.bbtn{font-size:22px;padding:6px 10px;cursor:pointer}
-.ptitle{flex:1;text-align:center;font-size:17px;font-weight:bold;margin-right:40px}
-.bintro{background:var(--w);border-radius:14px;padding:14px;text-align:center;box-shadow:0 2px 6px rgba(0,0,0,0.06);margin-bottom:14px}
-.bintro .ic{width:58px;height:58px;margin-bottom:8px}
-.bintro h3{font-size:18px;margin-bottom:5px}
-.bintro p{font-size:13px;color:var(--g)}
-.bgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.bcard{background:var(--w);border-radius:12px;padding:12px 8px;text-align:center;box-shadow:0 2px 6px rgba(0,0,0,0.06);cursor:pointer}
-.bcard:active{transform:scale(0.95)}
-.bcard .ic{width:44px;height:44px;margin-bottom:6px;border-radius:10px}
-.bcard .nm{font-size:13px}
-.theader{background:var(--w);border-radius:14px;padding:18px;text-align:center;box-shadow:0 2px 6px rgba(0,0,0,0.06);margin-bottom:14px}
-.theader .ic{width:66px;height:66px;margin-bottom:10px;border-radius:14px}
-.theader h2{font-size:20px;margin-bottom:5px}
-.theader p{font-size:13px;color:var(--g)}
-.tlist{font-size:15px;font-weight:bold;margin:18px 0 10px}
-.titem{background:var(--w);border-radius:10px;padding:12px 14px;margin-bottom:9px;display:flex;align-items:center;box-shadow:0 2px 6px rgba(0,0,0,0.06);cursor:pointer}
-.titem:active{background:#f5f5f5}
-.titem .num{width:30px;height:30px;background:var(--p);color:var(--w);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:bold;flex-shrink:0}
-.titem .info{margin-left:10px;flex:1}
-.titem .ti{font-size:15px;font-weight:bold}
-.titem .sub{font-size:11px;color:var(--g);margin-top:2px}
-.titem .ar{color:#ccc;font-size:16px}
-.sc{background:var(--w);border-radius:14px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.08);margin-bottom:14px}
-.sc img{width:100%;display:block}
-.sc .desc{padding:12px;font-size:15px;text-align:center}
-.sc .badge{display:inline-block;background:var(--p);color:var(--w);width:26px;height:26px;border-radius:50%;line-height:26px;text-align:center;font-weight:bold;margin-right:6px}
-.cbox{background:linear-gradient(135deg,var(--s),#3DB9B1);color:var(--w);border-radius:10px;padding:16px;text-align:center;font-size:16px;font-weight:bold;margin:14px 0}
-.btnfav{width:100%;background:var(--w);border:2px solid var(--p);color:var(--p);border-radius:10px;padding:13px;font-size:15px;font-weight:bold;cursor:pointer;margin-top:6px}
-.btnfav.active{background:var(--p);color:var(--w)}
-.tabbar{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;background:var(--w);display:flex;justify-content:space-around;padding:8px 0;box-shadow:0 -2px 8px rgba(0,0,0,0.06)}
-.tabitem{display:flex;flex-direction:column;align-items:center;cursor:pointer;padding:5px 18px}
-.tabitem .ic{font-size:20px;color:var(--g)}
-.tabitem.active .ic{color:var(--p)}
-.tabitem .lb{font-size:10px;margin-top:2px;color:var(--g)}
-.tabitem.active .lb{color:var(--p);font-weight:bold}
-.empty{text-align:center;padding:50px 20px;color:var(--g)}
-.empty .ic{font-size:44px;margin-bottom:10px}
-.sg{background:var(--w);border-radius:10px;overflow:hidden;margin-top:14px}
-.sitem{padding:12px 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #f0f0f0}
-.sitem:last-child{border-bottom:none}
-.fbtn{padding:5px 10px;border:1px solid #ddd;border-radius:5px;background:var(--w);cursor:pointer;font-size:12px}
-.fbtn.active{background:var(--p);color:var(--w);border-color:var(--p)}
-.at{font-size:13px;color:var(--g);line-height:1.7;padding:14px}
-.toast{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,0.7);color:#fff;padding:10px 20px;border-radius:6px;font-size:14px;z-index:1000;display:none}
-.toast.show{display:block;animation:fa 1.5s}
-@keyframes fa{0%{opacity:0}20%{opacity:1}80%{opacity:1}100%{opacity:0}}
+
+/* 启动封面 */
+#splash{position:fixed;inset:0;z-index:9999;background:linear-gradient(135deg,#FF6B6B 0%,#FF8E53 100%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .8s;cursor:pointer}
+#splash .logo{font-size:80px;margin-bottom:20px;animation:bounce 2s infinite}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+#splash h1{color:#fff;font-size:.42rem;font-size:36px;font-weight:bold;margin-bottom:10px;text-shadow:0 2px 8px rgba(0,0,0,.2)}
+#splash p{color:rgba(255,255,255,.88);font-size:17px;margin-top:6px}
+#splash .tip{position:absolute;bottom:50px;color:rgba(255,255,255,.6);font-size:14px}
+#splash.fade{opacity:0;pointer-events:none}
+
+/* 顶栏 */
+.header{position:sticky;top:0;z-index:100;background:var(--bg);padding:12px 0;margin:-16px -16px 16px;border-bottom:2px solid var(--b)}
+.header-row{display:flex;align-items:center;justify-content:space-between;padding:0 4px;gap:8px}
+.header h1{font-size:1.18rem;color:var(--p);font-weight:bold}
+.header .ptitle{font-size:1rem;font-weight:bold;color:var(--t);flex:1;text-align:center}
+.hdr-btns{display:flex;gap:8px;align-items:center}
+.size-btn{background:var(--p3);color:var(--p);border:2px solid var(--p);border-radius:10px;padding:8px 12px;font-size:.82rem;cursor:pointer;font-weight:bold;line-height:1;min-height:44px;min-width:44px}
+.size-btn.on{background:var(--p);color:#fff}
+.back-btn{background:none;border:none;font-size:.95rem;color:var(--p);cursor:pointer;padding:8px 10px;font-weight:bold;min-height:48px}
+
+/* 搜索 */
+.search-bar{margin:12px 0}
+.search-bar input{width:100%;padding:16px 20px;border-radius:22px;border:2px solid var(--b);font-size:1rem;outline:none;background:var(--card);color:var(--t)}
+.search-bar input:focus{border-color:var(--p)}
+.search-results{margin-top:-6px}
+.sr-item{background:var(--card);border-radius:var(--r2);padding:14px 16px;margin:8px 0;cursor:pointer;box-shadow:var(--shadow);display:flex;align-items:center;gap:12px}
+.sr-item:active{transform:scale(.98)}
+.sr-item .em{font-size:1.6rem}
+.sr-item .nm{font-weight:bold;font-size:.95rem}
+.sr-item .sub{font-size:.75rem;color:var(--t2)}
+
+/* 防骗入口卡 */
+.fraud-entry{background:linear-gradient(135deg,#E74C3C,#FF6B6B);border-radius:var(--r);padding:18px;display:flex;align-items:center;gap:14px;color:#fff;cursor:pointer;box-shadow:var(--shadow);margin-bottom:14px}
+.fraud-entry:active{transform:scale(.98)}
+.fraud-entry .em{font-size:2.2rem}
+.fraud-entry .tt{font-size:1.05rem;font-weight:bold}
+.fraud-entry .dd{font-size:.78rem;opacity:.9}
+
+/* 宫格卡片 */
+.sec{font-size:1rem;font-weight:bold;margin:16px 0 10px}
+.app-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.app-card{background:var(--card);border-radius:var(--r);padding:22px 14px;text-align:center;cursor:pointer;box-shadow:var(--shadow);transition:transform .15s;min-height:124px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px}
+.app-card:active{transform:scale(.96)}
+.app-card .em{font-size:2.6rem;line-height:1}
+.app-card .nm{font-size:.95rem;font-weight:bold;color:var(--t)}
+.app-card .dd{font-size:.72rem;color:var(--t2);line-height:1.4}
+
+/* 列表项（教程列表/收藏） */
+.list-item{background:var(--card);border-radius:var(--r2);padding:16px 18px;margin:10px 0;display:flex;align-items:center;gap:14px;cursor:pointer;box-shadow:var(--shadow);min-height:64px}
+.list-item:active{transform:scale(.98)}
+.list-item .num{width:44px;height:44px;flex-shrink:0;background:var(--p);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:bold}
+.list-item .em{font-size:1.8rem;flex-shrink:0}
+.list-item .info{flex:1;min-width:0}
+.list-item .nm{font-size:.98rem;font-weight:bold;color:var(--t)}
+.list-item .sub{font-size:.76rem;color:var(--t2);margin-top:2px}
+.list-item .ver{font-size:.66rem;background:var(--p3);color:var(--p2);border-radius:6px;padding:2px 8px;margin-left:8px;vertical-align:middle}
+.list-item .ar{color:#ccc;font-size:1.1rem}
+.list-item .del-btn{background:none;border:none;font-size:1.1rem;color:#ccc;padding:10px;cursor:pointer;min-width:44px;min-height:44px}
+.list-item .del-btn:active{color:var(--red)}
+
+/* 商店真机截图画廊 */
+.shot-wrap{background:var(--card);border-radius:var(--r);padding:16px 14px;margin-bottom:14px;box-shadow:var(--shadow)}
+.shot-title{font-size:1.02rem;font-weight:bold;color:var(--t);margin-bottom:10px}
+.shot-row{display:flex;gap:10px;overflow-x:auto;padding-bottom:6px;-webkit-overflow-scrolling:touch}
+.shot-row img{height:230px;flex-shrink:0;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,.12)}
+.shot-note{font-size:.72rem;color:var(--t2);margin-top:8px}
+
+/* 官方手册链接 */
+.help-link{display:flex;align-items:center;gap:8px;margin-top:14px;padding:15px 16px;background:var(--card);border-radius:var(--r2);box-shadow:var(--shadow);color:var(--t);text-decoration:none;font-size:.95rem;font-weight:bold}
+.help-link .hx{margin-left:auto;color:var(--t2);font-size:1.2rem}
+
+/* 步骤页 */
+.step-card{background:var(--card);border-radius:var(--r);padding:22px 18px;box-shadow:var(--shadow)}
+.step-top{display:flex;align-items:flex-start;gap:14px;margin-bottom:14px}
+.step-num{width:48px;height:48px;flex-shrink:0;background:var(--p);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.25rem;font-weight:bold}
+.step-text{font-size:1.05rem;font-weight:bold;color:var(--t);line-height:1.55}
+.step-hint{background:var(--p3);padding:14px 16px;border-radius:var(--r2);font-size:.85rem;color:var(--t2);line-height:1.55;border-left:5px solid var(--p);margin-top:12px}
+.step-img{margin-top:16px;border-radius:var(--r2);overflow:hidden;background:#F0EBE7;display:flex;align-items:center;justify-content:center;min-height:150px}
+.step-img img,.step-img svg{width:100%;height:auto;display:block;max-height:240px;object-fit:contain}
+.step-img .step-photo{max-height:none;width:100%;height:auto}
+.tts-row{display:flex;gap:10px;margin-top:14px}
+.tts-btn{flex:1;background:var(--p3);color:var(--p);border:2px solid var(--p);border-radius:var(--r2);padding:13px;font-size:.92rem;font-weight:bold;cursor:pointer;min-height:52px}
+.tts-btn.on{background:var(--p);color:#fff}
+
+/* 底部翻页 */
+.nav-bottom{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:var(--w);background:var(--card);padding:12px 16px;padding-bottom:calc(12px + env(safe-area-inset-bottom,0));display:flex;align-items:center;justify-content:space-between;gap:10px;box-shadow:0 -4px 16px rgba(0,0,0,.08);z-index:200}
+.nav-btn{padding:14px 20px;background:var(--p);color:#fff;border:none;border-radius:var(--r2);font-size:.92rem;cursor:pointer;font-weight:bold;min-width:104px;min-height:52px;text-align:center}
+.nav-btn:disabled{background:#ccc;cursor:not-allowed}
+.nav-indicator{font-size:.85rem;color:var(--t2);flex:1;text-align:center}
+.done-row{padding:10px 16px 0}
+
+/* 大按钮 */
+.big-btn{width:100%;background:var(--p);color:#fff;border:none;border-radius:var(--r2);padding:15px;font-size:1rem;font-weight:bold;cursor:pointer;min-height:54px}
+.big-btn.ghost{background:var(--card);color:var(--p);border:2px solid var(--p)}
+
+/* 防骗页 */
+.seg{display:flex;gap:8px;margin-top:10px}
+.seg-btn{flex:1;background:var(--card);border:2px solid var(--b);color:var(--t2);border-radius:12px;padding:12px;font-size:.95rem;font-weight:bold;cursor:pointer;min-height:48px}
+.seg-btn.on{background:var(--p);border-color:var(--p);color:#fff}
+.fp-input{display:flex;gap:10px;margin:4px 0 14px}
+.fp-input input{flex:1;padding:15px 18px;border-radius:var(--r2);border:2px solid var(--b);font-size:.98rem;outline:none;background:var(--card);min-width:0}
+.fp-input input:focus{border-color:var(--p)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.chip{background:var(--card);border:2px solid var(--b);color:var(--t2);border-radius:20px;padding:8px 16px;font-size:.8rem;cursor:pointer;min-height:44px}
+.chip:active{border-color:var(--p);color:var(--p)}
+.verdict{border-radius:var(--r);padding:18px;color:#fff;margin-bottom:12px}
+.verdict.v-red{background:linear-gradient(135deg,#C0392B,#E74C3C)}
+.verdict.v-orange{background:linear-gradient(135deg,#E67E22,#F39C12)}
+.verdict.v-green{background:linear-gradient(135deg,#1E8449,#27AE60)}
+.verdict .vt{font-size:.8rem;opacity:.85}
+.verdict .vq{font-size:.85rem;opacity:.9;margin-top:4px}
+.verdict .vm{font-size:1.15rem;font-weight:bold;margin-top:10px;line-height:1.5}
+.verdict .va{font-size:.85rem;margin-top:10px;line-height:1.6;opacity:.95}
+.tips-card{background:var(--card);border-radius:var(--r);padding:16px 18px;box-shadow:var(--shadow);margin-bottom:12px}
+.tips-card .ti{display:flex;gap:10px;align-items:flex-start;padding:8px 0;font-size:.92rem;line-height:1.55}
+.tips-card .ti .em{flex-shrink:0}
+.q3-item{display:flex;gap:12px;padding:10px 0;font-size:.92rem;line-height:1.6;border-bottom:1px dashed var(--b)}
+.q3-item:last-child{border-bottom:none}
+.q3-item .qn{width:34px;height:34px;flex-shrink:0;background:var(--p);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:.95rem}
+.sos-btn{display:block;text-align:center;background:linear-gradient(135deg,#C0392B,#E74C3C);color:#fff;border-radius:var(--r2);padding:16px;font-size:1.05rem;font-weight:bold;text-decoration:none;margin-top:14px}
+
+/* 设置 */
+.sg{background:var(--card);border-radius:var(--r);margin:12px 0;box-shadow:var(--shadow)}
+.sg .sitem{padding:16px 18px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #f5ece5;gap:10px}
+.sg .sitem:last-child{border-bottom:none}
+.toggle{position:relative;width:60px;height:34px;flex-shrink:0}
+.toggle input{opacity:0;width:0;height:0}
+.toggle .tk{position:absolute;inset:0;background:#ccc;border-radius:20px;cursor:pointer;transition:.2s}
+.toggle .tk:before{content:'';position:absolute;width:26px;height:26px;left:4px;top:4px;background:#fff;border-radius:50%;transition:.2s}
+.toggle input:checked + .tk{background:var(--p)}
+.toggle input:checked + .tk:before{transform:translateX(26px)}
+.about{font-size:.82rem;color:var(--t2);line-height:1.7;padding:14px 18px}
+
+/* 底部标签栏 */
+.tabbar{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:var(--w);background:var(--card);display:flex;justify-content:space-around;padding:8px 0;padding-bottom:calc(8px + env(safe-area-inset-bottom,0));box-shadow:0 -2px 8px rgba(0,0,0,.06);z-index:150}
+.tabitem{display:flex;flex-direction:column;align-items:center;cursor:pointer;padding:6px 18px;border:none;background:none;min-width:64px;min-height:56px}
+.tabitem .em{font-size:1.5rem;line-height:1;filter:grayscale(1);opacity:.55}
+.tabitem.on .em{filter:none;opacity:1}
+.tabitem .lb{font-size:.62rem;margin-top:3px;color:var(--t2)}
+.tabitem.on .lb{color:var(--p);font-weight:bold}
+
+/* 空状态 / 提示 */
+.empty{text-align:center;padding:56px 20px;color:var(--t2)}
+.empty .em{font-size:3rem;margin-bottom:12px;opacity:.5}
+.toast{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,.75);color:#fff;padding:12px 24px;border-radius:10px;font-size:.9rem;z-index:1000;display:none;max-width:80%}
+.toast.show{display:block;animation:fa 1.8s}
+@keyframes fa{0%{opacity:0}15%{opacity:1}80%{opacity:1}100%{opacity:0}}
+::-webkit-scrollbar{width:0}
 </style>
 </head>
 <body>
 
-<!-- 封面启动页 -->
+<!-- 启动封面 -->
 <div id="splash">
-  <div class="logo">❤️</div>
-  <h1>银龄指尖</h1>
-  <p>让爸妈跟上时代</p>
-  <div class="sub">— 专为中老年设计 —</div>
-</div>
-
-<!-- 一级：首页 -->
-<div id="page-home" class="page active">
-  <div class="header"><h1>❤️ 银龄指尖</h1><p>让爸妈跟上时代</p></div>
-  <div class="sbox"><span style="color:#999">🔍</span><input type="text" id="search-input" placeholder="搜索软件…" oninput="onSearch(this.value)"></div>
-  <div id="search-tip" style="font-size:12px;color:#aaa;padding:0 0 8px;display:none">找到 <span id="search-count">0</span> 个结果</div>
-  <div class="sec">📱 常用软件</div>
-  <div class="grid" id="app-grid"></div>
-</div>
-
-<!-- 二级A：软件详情页 -->
-<div id="page-app-detail" class="page">
-  <div class="bbar"><span class="bbtn" onclick="showPage('home')">←</span><h2 class="ptitle" id="app-detail-title">微信</h2></div>
-  <div id="app-detail-content"></div>
-</div>
-
-<!-- 二级B：手机品牌选择页 -->
-<div id="page-brand-select" class="page">
-  <div class="bbar"><span class="bbtn" onclick="showPage('home')">←</span><h2 class="ptitle">选择手机品牌</h2></div>
-  <div class="bintro">
-    <img class="ic" src="assets/icons/苹果手机图标.png" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%234A90D9%22 width=%22100%22 height=%22100%22 rx=%2220%22/><text x=%2250%22 y=%2255%22 text-anchor=%22middle%22 font-size=%2230%22 fill=%22white%22>设</text></svg>'">
-    <h3>📱 手机基础设置</h3>
-    <p>不同品牌的手机设置方法不同<br>请先选择您的手机品牌</p>
+  <div class="content">
+    <div class="logo">❤️</div>
+    <h1>银龄指尖</h1>
+    <p>让爸妈跟上时代</p>
   </div>
-  <div class="bgrid" id="brand-grid"></div>
+  <div class="tip">点击任意处进入</div>
 </div>
 
-<!-- 三级A：品牌教程列表页 -->
-<div id="page-brand-tutorial" class="page">
-  <div class="bbar"><span class="bbtn" onclick="showPage('brand-select')">←</span><h2 class="ptitle" id="brand-title">华为</h2></div>
-  <div id="brand-tutorial-content"></div>
+<!-- 首页 -->
+<div id="page-home" class="page active">
+  <div class="header">
+    <div class="header-row">
+      <h1>银龄指尖</h1>
+      <div class="hdr-btns">
+        <button class="size-btn" onclick="setFont('small')">小</button>
+        <button class="size-btn" onclick="setFont('medium')">中</button>
+        <button class="size-btn" onclick="setFont('large')">大</button>
+      </div>
+    </div>
+  </div>
+  <div class="search-bar">
+    <input type="text" id="searchInput" placeholder="搜索想学的，如：视频通话" oninput="onSearch(this.value)">
+  </div>
+  <div id="searchResults" class="search-results"></div>
+  <div class="fraud-entry" onclick="switchTab('fraud')">
+    <span class="em">🔍</span>
+    <div><div class="tt">防骗 · 辟谣 查一查</div><div class="dd">电话短信、养生说法，靠不靠谱问我就行</div></div>
+  </div>
+  <div class="sec">📱 常用软件</div>
+  <div class="app-grid" id="appGrid"></div>
 </div>
 
-<!-- 三级B：教程步骤详情页 -->
-<div id="page-tutorial-step" class="page">
-  <div class="bbar"><span class="bbtn" onclick="goBackFromStep()">←</span><h2 class="ptitle" id="step-title">教程</h2></div>
-  <div id="step-content"></div>
-  <div class="cbox">✅ 学会了！</div>
-  <button class="btnfav" id="fav-btn" onclick="toggleFav()">⭐ 收藏此教程</button>
+<!-- 查一查（防骗 / 辟谣 双模式，M-06 + M-10） -->
+<div id="page-fraud" class="page">
+  <div class="header">
+    <div class="header-row"><h1>🔍 查一查</h1></div>
+    <div class="seg">
+      <button class="seg-btn on" id="seg-fraud" onclick="switchCheckMode('fraud')">🛡️ 防骗</button>
+      <button class="seg-btn" id="seg-rumor" onclick="switchCheckMode('rumor')">📢 辟谣</button>
+    </div>
+  </div>
+  <div id="mode-fraud">
+    <div class="fp-input">
+      <input type="text" id="fraudInput" placeholder="输入听到的话，如：说我中奖了" oninput="onFraudInput(this.value)">
+      <button class="nav-btn" style="min-width:auto" onclick="doFraud()">查一查</button>
+    </div>
+    <div class="chips" id="fraudChips"></div>
+    <div id="fraudResult"></div>
+    <a class="sos-btn" href="tel:96110">📞 拿不准？打 96110 反诈专线</a>
+  </div>
+  <div id="mode-rumor" style="display:none">
+    <div class="fp-input">
+      <input type="text" id="rumorInput" placeholder="输入听到的说法，如：隔夜水致癌" oninput="onRumorInput(this.value)">
+      <button class="nav-btn" style="min-width:auto" onclick="doRumor()">查一查</button>
+    </div>
+    <div class="chips" id="rumorChips"></div>
+    <div id="rumorResult"></div>
+    <div class="tips-card" style="margin-top:14px">
+      <div class="ti">📢 结果依据官方辟谣平台公开内容整理，仅供参考；就医用药请遵医嘱。</div>
+    </div>
+    <a class="sos-btn" style="background:linear-gradient(135deg,#1E8449,#27AE60)" href="https://www.piyao.org.cn/" target="_blank" rel="noopener">🌐 去官方核实：中国互联网联合辟谣平台</a>
+    <a class="sos-btn" style="background:linear-gradient(135deg,#1A6E8E,#2980B9)" href="https://piyao.kepuchina.cn/" target="_blank" rel="noopener">🌐 去官方核实：科学辟谣平台</a>
+  </div>
 </div>
 
 <!-- 收藏页 -->
-<div id="page-favorites" class="page">
-  <div class="header"><h1>❤️ 我的收藏</h1><p>已收藏的教程</p></div>
-  <div id="fav-list"></div>
+<div id="page-favs" class="page">
+  <div class="header"><div class="header-row"><h1>❤️ 我的收藏</h1></div></div>
+  <div id="favList"></div>
 </div>
 
 <!-- 设置页 -->
 <div id="page-settings" class="page">
-  <div class="header"><h1>⚙️ 设置</h1></div>
+  <div class="header"><div class="header-row"><h1>⚙️ 设置</h1></div></div>
+  <div class="sec">🔤 字体大小</div>
   <div class="sg">
-    <div class="sitem"><span>🔤 字体大小</span>
-      <div><button class="fbtn" onclick="setFont('small')">小</button><button class="fbtn active" onclick="setFont('medium')" id="font-med">中</button><button class="fbtn" onclick="setFont('large')">大</button></div>
+    <div class="sitem"><span>选一个看得清的</span>
+      <div class="hdr-btns">
+        <button class="size-btn" onclick="setFont('small')">小</button>
+        <button class="size-btn" onclick="setFont('medium')">中</button>
+        <button class="size-btn" onclick="setFont('large')">大</button>
+      </div>
     </div>
   </div>
+  <div class="sec">🔊 语音播报</div>
   <div class="sg">
-    <div class="at"><p><strong>银龄指尖 V5.0</strong></p><p style="margin-top:8px">专为中老年用户打造的手机教程平台</p><p style="margin-top:5px">用最简单的步骤图解</p><p style="margin-top:5px">让每个人都能学会使用智能手机</p></div>
+    <div class="sitem">
+      <span>翻到教程自动读出来</span>
+      <label class="toggle"><input type="checkbox" id="autoTts" onchange="setAutoTts(this.checked)"><span class="tk"></span></label>
+    </div>
+  </div>
+  <div class="sec">ℹ️ 关于</div>
+  <div class="sg">
+    <div class="about">
+      <strong>银龄指尖 V6.2</strong><br>
+      专为中老年用户打造的手机教程平台。<br>
+      教程存收藏夹 · 换手机收藏会丢失（先记着常用教程在哪）· 数据只存在本机，不上传。<br>
+      防骗话术库依据公开反诈通报整理，仅供参考；遇紧急情况请拨打 96110。
+    </div>
   </div>
 </div>
 
-<!-- 底部导航 -->
-<div class="tabbar">
-  <div class="tabitem active" onclick="showPage('home')"><span class="ic">🏠</span><span class="lb">首页</span></div>
-  <div class="tabitem" onclick="showPage('favorites')"><span class="ic">❤️</span><span class="lb">收藏</span></div>
-  <div class="tabitem" onclick="showPage('settings')"><span class="ic">⚙️</span><span class="lb">设置</span></div>
+<!-- 软件教程列表页 -->
+<div id="page-app" class="page">
+  <div class="header">
+    <div class="header-row">
+      <button class="back-btn" onclick="goBack()">← 返回</button>
+      <span class="ptitle" id="appTitle">软件</span>
+      <span style="width:88px"></span>
+    </div>
+  </div>
+  <div id="appContent"></div>
+</div>
+
+<!-- 品牌选择页 -->
+<div id="page-brands" class="page">
+  <div class="header">
+    <div class="header-row">
+      <button class="back-btn" onclick="goBack()">← 返回</button>
+      <span class="ptitle">选择手机品牌</span>
+      <span style="width:88px"></span>
+    </div>
+  </div>
+  <div class="empty" style="padding:18px 20px 0"><div style="font-size:.92rem;line-height:1.7">不同品牌手机，设置方法不一样。<br>先看您用的什么手机，再点它：</div></div>
+  <div class="app-grid" id="brandGrid" style="margin-top:12px"></div>
+</div>
+
+<!-- 品牌教程列表页 -->
+<div id="page-brandtuts" class="page">
+  <div class="header">
+    <div class="header-row">
+      <button class="back-btn" onclick="goBack()">← 返回</button>
+      <span class="ptitle" id="brandTitle">品牌</span>
+      <span style="width:88px"></span>
+    </div>
+  </div>
+  <div id="brandTutsContent"></div>
+</div>
+
+<!-- 教程步骤页 -->
+<div id="page-tut" class="page">
+  <div class="header">
+    <div class="header-row">
+      <button class="back-btn" onclick="goBack()">← 返回</button>
+      <span class="ptitle" id="tutTitle">教程</span>
+      <button class="back-btn" id="favBtn" onclick="toggleFav()" style="font-size:1.4rem">🤍</button>
+    </div>
+  </div>
+  <div id="stepContent"></div>
+  <div class="done-row" id="doneRow"></div>
+  <div class="nav-bottom">
+    <button class="nav-btn" id="prevBtn" onclick="prevStep()">← 上一步</button>
+    <span class="nav-indicator" id="stepIndicator">1/4</span>
+    <button class="nav-btn" id="nextBtn" onclick="nextStep()">下一步 →</button>
+  </div>
+</div>
+
+<!-- 底部标签栏 -->
+<div class="tabbar" id="tabbar">
+  <button class="tabitem on" id="tab-home" onclick="switchTab('home')"><span class="em">🏠</span><span class="lb">首页</span></button>
+  <button class="tabitem" id="tab-fraud" onclick="switchTab('fraud')"><span class="em">🔍</span><span class="lb">查一查</span></button>
+  <button class="tabitem" id="tab-favs" onclick="switchTab('favs')"><span class="em">❤️</span><span class="lb">收藏</span></button>
+  <button class="tabitem" id="tab-settings" onclick="switchTab('settings')"><span class="em">⚙️</span><span class="lb">设置</span></button>
 </div>
 
 <div class="toast" id="toast"></div>
 
-<script>
-// 数据
-const apps=[
-{id:'wechat',name:'微信',desc:'聊天、视频通话',icon:'assets/icons/微信图标.png',type:'app'},
-{id:'taobao',name:'淘宝',desc:'网上购物',icon:'assets/icons/淘宝图标.png',type:'app'},
-{id:'douyin',name:'抖音',desc:'刷视频',icon:'assets/icons/抖音图标.png',type:'app'},
-{id:'amap',name:'高德地图',desc:'导航、打车',icon:'assets/icons/高德图标.png',type:'app'},
-{id:'12306',name:'铁路12306',desc:'买火车票',icon:'assets/icons/12306图标.png',type:'app'},
-{id:'phone',name:'手机设置',desc:'WiFi、内存清理',icon:'assets/icons/手机设置图标.png',type:'brand'},
-{id:'alipay',name:'支付宝',desc:'付款、收款',icon:'assets/icons/支付宝图标.png',type:'app'},
-{id:'meituan',name:'美团',desc:'外卖、买菜',icon:'assets/icons/美团图标.png',type:'app'},
-{id:'social',name:'人社局',desc:'查社保、挂号',icon:'assets/icons/人社局图标.png',type:'app'},
-{id:'traffic',name:'交管12123',desc:'查违章、预约',icon:'assets/icons/12123图标.png',type:'app'}
-];
-const brands=[
-{id:'huawei',name:'华为',icon:'assets/icons/华为手机图标.png'},
-{id:'xiaomi',name:'小米',icon:'assets/icons/小米手机图标.png'},
-{id:'oppo',name:'OPPO',icon:'assets/icons/OPPO手机图标.png'},
-{id:'vivo',name:'vivo',icon:'assets/icons/vivo手机图标.png'},
-{id:'apple',name:'苹果',icon:'assets/icons/苹果手机图标.png'},
-{id:'samsung',name:'三星',icon:'assets/icons/三星手机图标.png'}
-];
-const brandTuts={
-huawei:[{id:'hw-wifi',name:'连接WiFi',sub:'3步学会连接无线网',icon:'📶'},{id:'hw-storage',name:'清理内存',sub:'释放手机空间',icon:'🧹'},{id:'hw-bluetooth',name:'连接蓝牙',sub:'配对耳机/音箱',icon:'🔗'},{id:'hw-update',name:'系统更新',sub:'升级到新版本',icon:'🔄'}],
-xiaomi:[{id:'xm-wifi',name:'连接WiFi',sub:'3步学会连接无线网',icon:'📶'},{id:'xm-storage',name:'清理内存',sub:'一键清理加速',icon:'🧹'},{id:'xm-bluetooth',name:'连接蓝牙',sub:'配对耳机/音箱',icon:'🔗'},{id:'xm-update',name:'系统更新',sub:'MIUI版本升级',icon:'🔄'}],
-oppo:[{id:'op-wifi',name:'连接WiFi',sub:'3步学会连接无线网',icon:'📶'},{id:'op-storage',name:'清理内存',sub:'释放手机空间',icon:'🧹'},{id:'op-bluetooth',name:'连接蓝牙',sub:'配对耳机/音箱',icon:'🔗'},{id:'op-update',name:'系统更新',sub:'ColorOS升级',icon:'🔄'}],
-vivo:[{id:'vv-wifi',name:'连接WiFi',sub:'3步学会连接无线网',icon:'📶'},{id:'vv-storage',name:'清理内存',sub:'一键优化加速',icon:'🧹'},{id:'vv-bluetooth',name:'连接蓝牙',sub:'配对耳机/音箱',icon:'🔗'},{id:'vv-update',name:'系统更新',sub:'Funtouch升级',icon:'🔄'}],
-apple:[{id:'ap-wifi',name:'连接WiFi',sub:'设置无线网络',icon:'📶'},{id:'ap-storage',name:'清理存储',sub:'管理手机空间',icon:'🧹'},{id:'ap-bluetooth',name:'连接蓝牙',sub:'配对耳机/手表',icon:'🔗'},{id:'ap-update',name:'系统更新',sub:'iOS版本升级',icon:'🔄'}],
-samsung:[{id:'ss-wifi',name:'连接WiFi',sub:'3步学会连接无线网',icon:'📶'},{id:'ss-storage',name:'清理内存',sub:'释放手机空间',icon:'🧹'},{id:'ss-bluetooth',name:'连接蓝牙',sub:'配对耳机/手表',icon:'🔗'},{id:'ss-update',name:'系统更新',sub:'One UI升级',icon:'🔄'}]
-};
-const appTuts={
-wechat:[{id:'wx-msg',name:'发消息',sub:'和好友文字聊天',icon:'💬'},{id:'wx-video',name:'视频通话',sub:'面对面聊天',icon:'📹'},{id:'wx-pay',name:'付款',sub:'微信支付扫码付钱',icon:'💰'},{id:'wx-moments',name:'发朋友圈',sub:'分享生活动态',icon:'📱'}],
-taobao:[{id:'tb-search',name:'搜索商品',sub:'找到想要的东西',icon:'🔍'},{id:'tb-cart',name:'加入购物车',sub:'先收藏再买',icon:'🛒'},{id:'tb-buy',name:'下单付款',sub:'完成购买支付',icon:'💳'}],
-douyin:[{id:'dy-watch',name:'刷视频',sub:'看推荐精彩内容',icon:'▶️'},{id:'dy-search',name:'搜索视频',sub:'找想看的内容',icon:'🔍'},{id:'dy-like',name:'点赞收藏',sub:'喜欢就收藏起来',icon:'❤️'}],
-amap:[{id:'am-nav',name:'导航',sub:'规划行车路线',icon:'🧭'},{id:'am-taxi',name:'打车',sub:'叫出租车出行',icon:'🚕'}],
-alipay:[{id:'ali-pay',name:'付款',sub:'扫一扫付钱',icon:'💰'},{id:'ali-receive',name:'收款',sub:'让别人付钱给你',icon:'📥'}],
-meituan:[{id:'mt-food',name:'点外卖',sub:'在家轻松吃饭',icon:'🍜'},{id:'mt-buy',name:'买菜',sub:'次日送达家门口',icon:'🥬'}],
-social:[{id:'so-insurance',name:'查社保',sub:'看保险缴纳记录',icon:'📋'},{id:'so-reg',name:'预约挂号',sub:'医院看病预约',icon:'🏥'}],
-traffic:[{id:'tf-fine',name:'查违章',sub:'看罚单缴纳记录',icon:'🚗'},{id:'tf-book',name:'预约考试',sub:'驾照考试预约',icon:'📝'}],
-'12306':[{id:'tr-search',name:'查询车次',sub:'查看余票情况',icon:'🔍'},{id:'tr-buy',name:'购买火车票',sub:'完成购票支付',icon:'🎫'}]
-};
-const stepData={
-'hw-wifi':[{s:1,d:'打开手机【设置】'},{s:2,d:'点击【WLAN】或【无线网络】'},{s:3,d:'找到并点击您的WiFi名称'},{s:4,d:'输入WiFi密码，点击【连接】'}],
-'xm-wifi':[{s:1,d:'打开手机【设置】'},{s:2,d:'点击【WLAN】'},{s:3,d:'开启WLAN，选择您的WiFi'},{s:4,d:'输入密码，点击【连接】'}],
-'op-wifi':[{s:1,d:'打开手机【设置】'},{s:2,d:'点击【WLAN】'},{s:3,d:'开启WLAN，选择您的WiFi'},{s:4,d:'输入密码，点击【连接】'}],
-'vv-wifi':[{s:1,d:'打开手机【设置】'},{s:2,d:'点击【WLAN】'},{s:3,d:'开启WLAN，选择您的WiFi'},{s:4,d:'输入密码，点击【连接】'}],
-'ap-wifi':[{s:1,d:'打开手机【设置】（灰色齿轮图标）'},{s:2,d:'点击【无线局域网】或【Wi-Fi】'},{s:3,d:'开启无线局域网，选择WiFi名称'},{s:4,d:'输入密码，点击【加入】'}],
-'ss-wifi':[{s:1,d:'打开手机【设置】'},{s:2,d:'点击【连接】'},{s:3,d:'点击【WLAN】'},{s:4,d:'选择WiFi并输入密码'}],
-'hw-storage':[{s:1,d:'打开【设置】'},{s:2,d:'点击【存储】'},{s:3,d:'点击【清理加速】'},{s:4,d:'等待清理完成'}],
-'xm-storage':[{s:1,d:'打开【设置】'},{s:2,d:'点击【存储与备份】'},{s:3,d:'点击【垃圾清理】'},{s:4,d:'点击【一键清理】'}],
-'op-storage':[{s:1,d:'打开【设置】'},{s:2,d:'点击【存储】'},{s:3,d:'点击【清理】'},{s:4,d:'等待清理完成'}],
-'vv-storage':[{s:1,d:'打开【设置】'},{s:2,d:'点击【运存与存储空间】'},{s:3,d:'点击【清理存储空间】'},{s:4,d:'等待清理完成'}],
-'ap-storage':[{s:1,d:'打开【设置】'},{s:2,d:'点击【通用】'},{s:3,d:'点击【iPhone存储空间】'},{s:4,d:'查看可用容量'}],
-'ss-storage':[{s:1,d:'打开【设置】'},{s:2,d:'点击【电池和设备维护】'},{s:3,d:'点击【存储】'},{s:4,d:'点击【立即清理】'}],
-'hw-bluetooth':[{s:1,d:'打开【设置】'},{s:2,d:'点击【蓝牙】'},{s:3,d:'开启蓝牙，搜索设备'},{s:4,d:'点击设备名称配对'}],
-'xm-bluetooth':[{s:1,d:'打开【设置】'},{s:2,d:'点击【蓝牙】'},{s:3,d:'开启蓝牙，搜索设备'},{s:4,d:'点击设备名称配对'}],
-'op-bluetooth':[{s:1,d:'打开【设置】'},{s:2,d:'点击【蓝牙】'},{s:3,d:'开启蓝牙，搜索设备'},{s:4,d:'点击设备名称配对'}],
-'vv-bluetooth':[{s:1,d:'打开【设置】'},{s:2,d:'点击【蓝牙】'},{s:3,d:'开启蓝牙，搜索设备'},{s:4,d:'点击设备名称配对'}],
-'ap-bluetooth':[{s:1,d:'打开【设置】'},{s:2,d:'点击【蓝牙】'},{s:3,d:'开启蓝牙，搜索设备'},{s:4,d:'点击设备名称配对'}],
-'ss-bluetooth':[{s:1,d:'打开【设置】'},{s:2,d:'点击【连接】'},{s:3,d:'点击【蓝牙】'},{s:4,d:'开启蓝牙，搜索并配对'}],
-'hw-update':[{s:1,d:'打开【设置】'},{s:2,d:'点击【系统和更新】'},{s:3,d:'点击【软件更新】'},{s:4,d:'点击【检查更新】'}],
-'xm-update':[{s:1,d:'打开【设置】'},{s:2,d:'点击【我的设备】'},{s:3,d:'点击【MIUI版本】'},{s:4,d:'点击【检查更新】'}],
-'op-update':[{s:1,d:'打开【设置】'},{s:2,d:'点击【软件更新】'},{s:3,d:'点击【检查更新】'},{s:4,d:'等待下载安装'}],
-'vv-update':[{s:1,d:'打开【设置】'},{s:2,d:'点击【系统升级】'},{s:3,d:'点击【检查更新】'},{s:4,d:'等待下载安装'}],
-'ap-update':[{s:1,d:'打开【设置】'},{s:2,d:'点击【通用】'},{s:3,d:'点击【软件更新】'},{s:4,d:'点击【下载并安装】'}],
-'ss-update':[{s:1,d:'打开【设置】'},{s:2,d:'点击【软件更新】'},{s:3,d:'点击【下载并安装】'},{s:4,d:'等待更新完成'}],
-'wx-msg':[{s:1,d:'打开微信，点击一个好友'},{s:2,d:'点击屏幕底部的输入框'},{s:3,d:'输入想说的话'},{s:4,d:'点击【发送】按钮'}],
-'wx-video':[{s:1,d:'打开微信，点击好友'},{s:2,d:'点击右上角【+】'},{s:3,d:'选择【视频通话】'},{s:4,d:'等待对方接听'}],
-'wx-pay':[{s:1,d:'打开微信，点击【我】'},{s:2,d:'点击【服务】'},{s:3,d:'点击【收付款】'},{s:4,d:'出示付款码'}],
-'wx-moments':[{s:1,d:'打开微信，点击【发现】'},{s:2,d:'点击【朋友圈】'},{s:3,d:'点击右上角【相机】'},{s:4,d:'选照片发布'}],
-'wx-friend':[{s:1,d:'打开微信'},{s:2,d:'点击右上角【+】'},{s:3,d:'点击【添加朋友】'},{s:4,d:'输入手机号搜索添加'}],
-'wx-pic':[{s:1,d:'打开聊天窗口'},{s:2,d:'点击底部【+】'},{s:3,d:'点击【图片】'},{s:4,d:'选择照片发送'}],
-'wx-voice':[{s:1,d:'打开聊天窗口'},{s:2,d:'长按底部麦克风'},{s:3,d:'说话后松开发送'},{s:4,d:'看到波纹表示发送成功'}],
-'wx-hongbao':[{s:1,d:'打开聊天窗口'},{s:2,d:'点击底部【+】'},{s:3,d:'点击【红包】'},{s:4,d:'输入金额发送红包'}],
-'wx-sticker':[{s:1,d:'打开聊天窗口'},{s:2,d:'点击输入框旁的【笑脸】'},{s:3,d:'滑动选择表情包'},{s:4,d:'点击发送'}],
-'wx-weather':[{s:1,d:'打开微信'},{s:2,d:'搜索"城市名+天气"'},{s:3,d:'查看天气预报'},{s:4,d:'点击关注可每日推送'}],
-'wx-privacy':[{s:1,d:'打开微信，点击【我】'},{s:2,d:'点击【设置】'},{s:3,d:'点击【隐私】'},{s:4,d:'设置朋友圈可见范围'}],
-'wx-group':[{s:1,d:'打开微信'},{s:2,d:'点击【通讯录】'},{s:3,d:'点击【群聊】'},{s:4,d:'选择群进入'}],
-'wx-top':[{s:1,d:'长按需要置顶的聊天'},{s:2,d:'弹出菜单后选择【置顶】'},{s:3,d:'该聊天显示在最上方'},{s:4,d:'取消置顶同操作'}],
-'wx-transfer':[{s:1,d:'打开聊天窗口'},{s:2,d:'点击底部【+】'},{s:3,d:'点击【转账】'},{s:4,d:'输入金额和密码转账'}],
-'wx-search':[{s:1,d:'打开微信'},{s:2,d:'点击顶部搜索框'},{s:3,d:'输入关键词'},{s:4,d:'点击搜索结果进入'}],
-'wx-article':[{s:1,d:'打开文章'},{s:2,d:'点击右上角【...】'},{s:3,d:'点击【收藏】'},{s:4,d:'去【我-收藏】查看'}],
-'wx-moments-view':[{s:1,d:'打开微信'},{s:2,d:'点击【发现】'},{s:3,d:'点击【朋友圈】'},{s:4,d:'上下滑动浏览'}],
-'ali-pay':[{s:1,d:'打开支付宝'},{s:2,d:'点击【付钱】'},{s:3,d:'向商家出示付款码'},{s:4,d:'输入密码完成支付'}],
-'ali-receive':[{s:1,d:'打开支付宝'},{s:2,d:'点击【收钱】'},{s:3,d:'向对方展示收款码'},{s:4,d:'等待对方扫码转账'}],
-'ali-huafei':[{s:1,d:'打开支付宝'},{s:2,d:'点击【充值中心】'},{s:3,d:'输入手机号和金额'},{s:4,d:'确认支付'}],
-'tb-search':[{s:1,d:'打开淘宝'},{s:2,d:'点击顶部搜索框'},{s:3,d:'输入商品名称'},{s:4,d:'点击【搜索】'}],
-'tb-cart':[{s:1,d:'选择商品规格'},{s:2,d:'点击【加入购物车】'},{s:3,d:'去购物车确认'},{s:4,d:'点击【结算】'}],
-'tb-buy':[{s:1,d:'确认收货地址'},{s:2,d:'选择支付方式'},{s:3,d:'点击【提交订单】'},{s:4,d:'完成支付'}],
-'dy-watch':[{s:1,d:'打开抖音'},{s:2,d:'上下滑动浏览视频'},{s:3,d:'双击屏幕点赞'},{s:4,d:'点击评论互动'}],
-'dy-like':[{s:1,d:'看到喜欢的视频'},{s:2,d:'点击右侧【爱心】'},{s:3,d:'点击【收藏】'},{s:4,d:'去【我】查看收藏'}],
-'dy-search':[{s:1,d:'打开抖音'},{s:2,d:'点击顶部搜索框'},{s:3,d:'输入想看的内容'},{s:4,d:'点击视频观看'}],
-'am-nav':[{s:1,d:'打开高德地图'},{s:2,d:'点击【路线】'},{s:3,d:'输入目的地'},{s:4,d:'选择出行方式导航'}],
-'am-taxi':[{s:1,d:'打开高德地图'},{s:2,d:'点击【打车】'},{s:3,d:'输入出发地和目的地'},{s:4,d:'选择车型下单'}],
-'mt-food':[{s:1,d:'打开美团'},{s:2,d:'点击【外卖】'},{s:3,d:'选择商家和菜品'},{s:4,d:'确认下单并支付'}],
-'mt-buy':[{s:1,d:'打开美团'},{s:2,d:'点击【美团买菜】'},{s:3,d:'选择菜品加入购物车'},{s:4,d:'结算后等待配送'}],
-'so-insurance':[{s:1,d:'打开人社局App'},{s:2,d:'点击【社保查询】'},{s:3,d:'输入身份证登录'},{s:4,d:'查看缴纳记录'}],
-'so-reg':[{s:1,d:'打开人社局App'},{s:2,d:'点击【预约挂号】'},{s:3,d:'选择医院和科室'},{s:4,d:'选择日期预约'}],
-'tf-fine':[{s:1,d:'打开交管12123'},{s:2,d:'点击【备案车辆】'},{s:3,d:'添加车牌信息'},{s:4,d:'查询违章并处理'}],
-'tf-book':[{s:1,d:'打开交管12123'},{s:2,d:'点击【考试预约】'},{s:3,d:'选择考场和日期'},{s:4,d:'确认预约'}],
-'tr-search':[{s:1,d:'打开铁路12306'},{s:2,d:'输入出发地和目的地'},{s:3,d:'选择出发日期'},{s:4,d:'查询余票'}],
-'tr-buy':[{s:1,d:'选择车次和座位'},{s:2,d:'填写乘客信息'},{s:3,d:'确认订单并支付'},{s:4,d:'收到购票成功短信'}]
-};
-var imgMap = {
-  'wx-msg':'微信01_发消息.png','wx-video':'微信02_视频通话.png','wx-moments':'微信03_发朋友圈.png',
-  'wx-pay':'微信04_收付款.png','wx-friend':'微信05_添加好友.png','wx-pic':'微信06_发送图片.png',
-  'wx-voice':'微信07_语音输入.png','wx-hongbao':'微信08_发送红包.png','wx-sticker':'微信09_使用表情包.png',
-  'wx-moments-view':'微信10_查看朋友圈.png','wx-article':'微信11_收藏文章.png','wx-mpay':'微信12_使用微信支付.png',
-  'wx-huafei':'微信13_充值话费.png','wx-weather':'微信14_查天气.png','wx-privacy':'微信15_设置朋友圈权限.png',
-  'wx-group':'微信16_加入群聊.png','wx-top':'微信17_置顶聊天.png','wx-transfer':'微信18_转账.png',
-  'wx-search':'微信19_查找聊天记录.png',
-  'ali-pay':'支付宝_付款.png','ali-receive':'支付宝图标.png','ali-huafei':'支付宝图标.png',
-  'tb-search':'淘宝_搜索商品.png','tb-cart':'淘宝图标.png','tb-buy':'淘宝图标.png',
-  'dy-watch':'抖音_刷视频.png','dy-like':'抖音图标.png','dy-search':'抖音图标.png',
-  'am-nav':'高德_导航.png','am-taxi':'高德图标.png',
-  'mt-food':'美团_点外卖.png','mt-buy':'美团图标.png',
-  'so-insurance':'人社局_查社保.png','so-reg':'人社局图标.png',
-  'tf-fine':'交管12123_查违章.png','tf-book':'12123图标.png',
-  'tr-search':'12306_查询车次.png','tr-buy':'12306图标.png',
-  'hw-wifi':'华为手机图标.png','hw-storage':'华为手机图标.png','hw-bluetooth':'华为手机图标.png','hw-update':'华为手机图标.png',
-  'xm-wifi':'小米手机图标.png','xm-storage':'小米手机图标.png','xm-bluetooth':'小米手机图标.png','xm-update':'小米手机图标.png',
-  'op-wifi':'OPPO手机图标.png','op-storage':'OPPO手机图标.png','op-bluetooth':'OPPO手机图标.png','op-update':'OPPO手机图标.png',
-  'vv-wifi':'vivo手机图标.png','vv-storage':'vivo手机图标.png','vv-bluetooth':'vivo手机图标.png','vv-update':'vivo手机图标.png',
-  'ap-wifi':'苹果手机图标.png','ap-storage':'苹果手机图标.png','ap-bluetooth':'苹果手机图标.png','ap-update':'苹果手机图标.png',
-  'ss-wifi':'三星手机图标.png','ss-storage':'三星手机图标.png','ss-bluetooth':'三星手机图标.png','ss-update':'三星手机图标.png'
-};
-var tutImg = imgMap[id] || '微信图标.png';
-var steps=stepData[id]||[{s:1,d:'第一步'},{s:2,d:'第二步'},{s:3,d:'第三步'}];
-var h='<div class="sc"><img src="assets/'+tutImg+'" style="width:100%;max-height:260px;object-fit:contain;background:#f5f5f5" onerror="this.style.display=\'none\'"><div class="desc"><span class="badge">教程</span>'+id.split('-').pop()+'</div></div>';
-steps.forEach(function(s,i){h+='<div class="titem"><div class="num">'+s.s+'</div><div class="info"><div class="ti">'+s.d+'</div><div class="sub">第 '+(i+1)+' 步</div></div></div>';});
-document.getElementById('step-content').innerHTML=h;
-updateFavBtn();
-showPage('tutorial-step');
-}
-function goBackFromStep(){
-if(prevPage==='app-detail')showPage('app-detail');
-else if(prevPage==='brand-tutorial')showPage('brand-tutorial');
-else showPage('home');
-}
-function toggleFav(){
-if(!curTut)return;
-let idx=favorites.findIndex(f=>f.id===curTut.id);
-if(idx>-1){favorites.splice(idx,1);toast('已取消收藏');}
-else{favorites.push({...curTut});toast('已收藏！');}
-localStorage.setItem('favs',JSON.stringify(favorites));
-updateFavBtn();
-renderFavs();
-}
-function updateFavBtn(){
-if(!curTut)return;
-let isFav=favorites.some(f=>f.id===curTut.id);
-let btn=document.getElementById('fav-btn');
-btn.className='btnfav'+(isFav?' active':'');
-btn.textContent=isFav?'❤️ 已收藏':'⭐ 收藏此教程';
-}
-function renderFavs(){
-let h='';
-if(favorites.length===0){
-h='<div class="empty"><div class="ic">📚</div><p>还没有收藏任何教程</p><p style="margin-top:8px;font-size:13px">点击教程页的⭐收藏</p></div>';
-}else{
-favorites.forEach(f=>{h+=`<div class="titem" onclick="openTut('${f.id}','${f.pid}','${f.ptype}','${f.pname}')"><div class="num">📖</div><div class="info"><div class="ti">${f.pname}</div><div class="sub">${f.id.split('-').pop()}</div></div><span class="ar">›</span></div>`;});
-}
-document.getElementById('fav-list').innerHTML=h;
-}
-function setFont(sz){
-document.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('active'));
-document.getElementById('font-med').classList.remove('active');
-let btn=document.querySelector(`.fbtn[onclick="setFont('${sz}')"]`);
-if(btn)btn.classList.add('active');
-if(sz==='small')document.body.style.fontSize='13px';
-else if(sz==='large')document.body.style.fontSize='17px';
-else document.body.style.fontSize='15px';
-localStorage.setItem('fontsize',sz);
-}
-function loadFont(){
-let sz=localStorage.getItem('fontsize')||'medium';
-setFont(sz);
-}
-function toast(msg){
-let t=document.getElementById('toast');
-t.textContent=msg;t.classList.remove('show');
-void t.offsetWidth;
-t.classList.add('show');
-setTimeout(()=>t.classList.remove('show'),1500);
-}
-init();
-</script>
+<script src="data/tutorials.js"></script>
+<script src="data/rumors.js"></script>
+<script src="data/step-imgs.js"></script>
+<script src="data/realshots.js"></script>
+<script src="data/help-links.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
